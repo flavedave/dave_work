@@ -1,0 +1,37 @@
+version: '3.0'
+
+# Run rasa shell for testing purposes
+
+services:
+  rasa:
+    image: rasaservice:latest
+    ports:
+      - 5005:5005
+    volumes:
+      - ./rasa_bot:/app/rasa_bot
+    entrypoint: poetry run rasa shell --cors "*" --debug --endpoint endpoints.docker.yml
+    networks:
+      - rasa_network
+    container_name: rasa  # use 'docker attach rasa' interact with the rasa shell:
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+
+  rasa_action:
+    image: rasaservice.action:latest
+    ports:
+      - 5055:5055
+    networks:
+      - rasa_network
+
+  faq_service:
+    image: faqservice:latest
+    ports:
+      - 8001:8001 # 5000 did not work, so I used 5001
+    networks:
+      - rasa_network
+
+volumes:
+  pgdata:
+
+networks:
+  rasa_network:

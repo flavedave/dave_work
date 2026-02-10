@@ -1,0 +1,48 @@
+version: '3.0'
+
+# Deployment of Rasa-Chatbot services
+# ! Frontend-image assumes 'Digitaler Berater' database and backend services are running on our dev server !
+
+services:
+  rasa:
+    image: rasa-chatbot:latest # Image created from: rasa-chatbot/dockerfile
+    ports:
+      - 5005:5005
+    volumes:
+      - ./rasa_bot:/app/rasa_bot
+    networks:
+      - rasa_network
+    entrypoint: 'poetry run rasa run --enable-api --cors "*" --debug --endpoints endpoints.docker.yml'
+    container_name: rasa  # use 'docker attach rasa' interact with the rasa shell
+    stdin_open: true 
+    tty: true       
+
+  rasa_actions:
+    image: rasa-chatbot.actions:latest # Image created from: rasa-chatbot/dockerfile.actions
+    container_name: rasa_action
+    ports:
+      - 5055:5055
+    networks:
+      - rasa_network
+
+  rag:
+    image: rag-engine:latest # Image created from: rag-engine/dockerfile
+    container_name: faq_service
+    ports:
+      - 8001:8001
+    networks:
+      - rasa_network
+
+  frontend: # Legacy 'Digitaler Berater' angular frontend.
+    image: frontend-angular:latest
+    container_name: frontend_angular
+    ports:
+      - 80:80
+    networks:
+      - rasa_network
+
+volumes:
+  pgdata:
+
+networks:
+  rasa_network:

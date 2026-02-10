@@ -1,0 +1,109 @@
+version: "3.1"
+
+rules:
+
+  - rule: start conversation by greet
+    conversation_start: true
+    steps:
+    - intent: greet
+    - action: utter_introduce
+    - action: utter_ask_insurance_type
+
+  - rule: start conversation
+    #conversation_start: true  # this rule only applies at the beginning of a conversation
+    steps:
+      - intent: start_conversation
+      - action: utter_introduce
+      - action: utter_ask_insurance_type
+
+  - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+    steps:
+      - intent: nlu_fallback
+      - action: action_llm_response
+      #- action: utter_default
+
+  - rule: Respond to FAQs
+    steps:
+      - intent: faq
+      #- action: utter_faq
+      - action: action_llm_response
+
+  - rule: Explain things
+    steps:
+      - intent: explain
+      - action: utter_explain
+
+  - rule: Explain why_information_needed
+    steps:
+      - intent: why_information_needed
+      - action: action_llm_response
+
+  - rule: say goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Acivate hrv form
+    steps:
+      - intent: request_tariff_information
+      - action: utter_begin_tariff_conversation
+      - action: hrv_form
+      - active_loop: hrv_form
+
+  - rule: Submit hrv form
+    condition:
+      - active_loop: hrv_form
+    steps:
+      - action: hrv_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_submit_hrv_form
+
+  - rule: Activate phpv form
+    condition:
+      - slot_was_set:
+          - insurance_type: Private Haftpflichtversicherung
+    steps:
+      - intent: request_tariff_information
+      - action: utter_begin_tariff_conversation
+      - action: phpv_form
+      - active_loop: phpv_form
+
+  - rule: Submit phpv form
+    condition:
+      - active_loop: phpv_form
+    steps:
+      - action: phpv_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_submit_phpv_form
+
+  - rule: Activate kfz form
+    condition:
+      - slot_was_set:
+          - insurance_type: KFZ Versicherung
+    steps:
+      - intent: request_tariff_information
+      - action: utter_begin_tariff_conversation
+      - action: kfz_form
+      - active_loop: kfz_form
+
+  - rule: Submit kfz form
+    condition:
+      - active_loop: kfz_form
+    steps:
+      - action: kfz_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_submit_insurance_form
+
+  - rule: Cancel insurance form
+    steps:
+      - intent: cancel
+      - action: action_deactivate_loop
+      - active_loop: null
+      - action: utter_cancel_insurance_form
+      - action: utter_ask_insurance_type

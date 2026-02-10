@@ -1,0 +1,170 @@
+version: "3.1"
+
+nlu:
+#____________________________insurance_faqs_______________________________________
+
+- intent: faq
+  examples: |
+    - wann zahlt die versicherung nicht
+    - in welchen fällen übernimmt die versicherung keine kosten
+    - wann greift die versicherung nicht
+    - welche schäden sind nicht abgedeckt
+    - wann verweigert die versicherung die zahlung
+    - wann kommt die versicherung nicht für den schaden auf
+    - bei welchen fällen greift die versicherung nicht
+    - warum brauche ich eine versicherung
+    - wieso sollte ich eine versicherung abschließen
+    - wozu ist eine versicherung sinnvoll
+    - weshalb ist eine versicherung wichtig
+    - aus welchem Grund muss ich mich versichern
+    - warum ist eine versicherung nützlich
+    - wieso brauche ich überhaupt eine versicherung
+    - wozu sollte man versichert sein
+    - weshalb sollte man eine versicherung haben
+    - welche schäden deckt die versicherung ab
+    - was ist versichert
+    - in welchen fällen zahlt die versicherung
+    - bei welchen schäden kommt die versicherung auf
+    - welche schäden sind durch die versicherung abgedeckt
+    - was genau ist durch die versicherung versichert
+    - in welchen fällen greift die versicherung
+    - welche leistungen umfasst die versicherung
+    - was übernimmt die versicherung
+    - bei welchen vorfällen zahlt die versicherung
+    - welche risiken sind durch die versicherung abgedeckt
+    - was deckt meine versicherung ab
+    - für welche schäden leistet die versicherung
+    - was ist alles in meiner versicherung enthalten
+    - welche leistungen bietet die versicherung an
+    - bei welchen ereignissen springt die versicherung ein
+    - in welchen situationen greift die versicherung
+    - welche vorfälle sind durch die versicherung gedeckt
+    - was übernimmt meine versicherung im schadensfall
+    - welche kosten werden von der versicherung getragen
+    - was zählt zu den abgedeckten leistungen meiner versicherung
+    - welche schäden sind durch meinen versicherungsschutz gedeckt
+    - wann kann ich meine versicherung kündigen
+    - zu welchem zeitpunkt kann ich meine versicherung beenden
+    - gibt es fristen, um die versicherung zu kündigen
+    - wie lange im voraus muss ich die versicherung kündigen
+    - bis wann kann ich die versicherung kündigen
+    - wann ist es möglich, die versicherung zu beenden
+    - kann ich die versicherung jederzeit kündigen
+    - wann kann ich die versicherung kündigen
+    - zu welchem zeitpunkt kann die versicherung gekündigt werden
+    - welche fristen gelten für die kündigung der versicherung
+    - zu welchem datum kann ich die versicherung beenden
+    - gibt es bestimmte kündigungsfristen für die versicherung
+    - wann kann ich die kündigung meiner versicherung einreichen
+    - muss ich eine bestimmte frist einhalten um die versicherung zu kündigen
+    - warum ist mein beruf relevant
+    - warum willst du meine tätigkeit erfahren
+    - warum fragt ihr nach meiner beruflichen situation
+    - warum ist es wichtig ob ich angestellt oder student bin
+    - was hat mein beruf mit der versicherung zu tun
+    - warum ist mein status wie angestellt oder rentner wichtig
+    - warum müsst ihr wissen ob ich angestellt bin
+    - warum ist meine berufliche situation für die versicherung relevant
+    - was bringt es wenn ich angebe dass ich beamter bin
+    - warum wollt ihr wissen was ich beruflich mache
+    - warum fragt die versicherung nach meinem beruf
+    - warum ist es wichtig ob ich student oder rentner bin
+    - warum müsst ihr meinen beruf wissen
+    - welchen unterschied macht mein beruf
+    - warum beeinflusst mein beruf den tarif
+    - welche rolle spielt mein beruf bei der versicherung
+    - warum will die versicherung wissen was ich arbeite
+    - ist es wichtig was ich beruflich mache
+    - zählt mein beruf für die versicherung
+    - was hat meine tätigkeit mit der beitragshöhe zu tun
+    - was genau bedeutet es wenn ich student bin
+    - warum interessiert euch meine tätigkeit
+    - macht es einen unterschied ob ich student oder angestellt bin
+    - warum wird nach meiner arbeit gefragt
+    - welchen einfluss hat mein beruf auf den versicherungsschutz
+    - warum kann ich als rentner anders eingestuft werden
+    - was ist der grund für die frage nach meinem beruf
+    - warum müsst ihr wissen dass ich arbeitslos bin
+    - warum fragt ihr ob ich angestellt oder Arbeitslos bin
+    - ist es wirklich wichtig ob ich beamter bin
+    - warum spielt es eine rolle ob ich angestellt bin
+    - sind hier alle schadensmeldungen relevant oder nur die die von der versicherung übernommen wurden
+    - ich habe einen schaden gemeldet aber die versicherung hat ihn abgelehnt zählt das auch
+    - zählen auch die schäden die nicht übernommen wurden
+    - was ist wenn die versicherung den schaden abgelehnt hat zählt das trotzdem
+    - zählen auch abgelehnte schadensmeldungen
+    - muss ich auch abgelehnte schadensfälle angeben
+    - werden nur übernommene schäden berücksichtigt
+    - zählen alle gemeldeten schäden oder nur die ausgezahlten
+    - was ist wenn ein schaden nicht übernommen wurde muss ich ihn angeben
+    - sind auch gemeldete aber nicht regulierte schäden relevant
+    - wer kann in meiner versicherung mitversichert werden
+    - kann ich auch meine familie mitversichern
+    - welche personen sind in meiner versicherung mitversichert
+    - ist es möglich partner oder kinder mitzuversichern
+    - deckt die versicherung auch schäden von familienmitgliedern ab
+    - sind meine kinder automatisch mitversichert
+    - muss ich familienangehörige extra versichern
+    - kann ich meinen ehepartner in die versicherung aufnehmen
+    - wen kann ich in meine versicherung aufnehmen
+    - können auch familienmitglieder versichert werden
+    - muss ich meinen partner extra versichern
+    - wie kann ich meinen partner mitversichern
+    - wer kann von der versicherung profitieren
+    - können kinder mitversichert werden
+    - wer wird durch meine versicherung abgedeckt
+    - wen deckt meine versicherung ab
+    - ist mein partner automatisch mitversichert
+    - kann ich meinen mann in die versicherung aufnehmen
+    - ist mein mann automatisch mitversichert
+    - kann ich meine frau mitversichern
+    - muss ich meine frau extra versichern
+    - wie kann ich meinen mann versichern
+    - wird meine frau durch die versicherung abgedeckt
+    - ist meine frau in meiner versicherung mitversichert
+    - kann meine frau von der versicherung profitieren
+    - kann ich meinen mann in meine versicherung einschließen
+    - wird mein mann von der versicherung abgedeckt
+    - muss ich mit meinem partner verheiratet sein
+    - muss ich eine eingetragene lebenspartnerschaft haben um meinen partner zu versichern
+    - reicht eine partnerschaft ohne heirat für die versicherung
+    - muss mein partner und ich verheiratet sein für den gemeinsamen versicherungsschutz
+    - gilt der versicherungsschutz nur für verheiratete paare
+    - müssen mein partner und ich in einer eingetragenen partnerschaft leben
+    - gilt die versicherung auch ohne heirat für meinen partner
+    - brauche ich eine ehe oder partnerschaft für die versicherung
+    - müssen mein partner und ich offiziell verheiratet sein
+    - muss ich mit meinem mann verheiratet sein für die versicherung
+    - kann ich meine freundin auch ohne heirat versichern
+    - muss ich mit meiner frau eine eingetragene lebenspartnerschaft haben
+    - reicht es wenn meine freundin und ich zusammenleben für die versicherung
+    - kann ich meinen freund in die versicherung aufnehmen ohne dass wir verheiratet sind
+    - muss ich meinen mann heiraten damit er in der versicherung mitversichert ist
+    - kann meine freundin mitversichert werden auch wenn wir nicht verheiratet sind
+    - brauche ich eine ehe mit meiner frau für den versicherungsschutz
+    - muss ich mit meinem freund verheiratet sein für den gemeinsamen schutz
+    - kann mein freund auch ohne ehe in meine versicherung
+    - kann ich auch eine selbstbeteiligung in höhe von 500€ abschließen
+    - sind andere summen für die selbstbeteiligung möglich
+    - kann ich eine selbstbeteiligung in einer anderen höhe wählen
+    - gibt es verschiedene selbstbeteiligungsoptionen
+    - muss die selbstbeteiligung 250€ betragen
+    - kann ich weniger als 250€ selbstbeteiligung wählen
+    - gibt es flexible selbstbeteiligungssummen
+    - kann ich die selbstbeteiligung anpassen
+    - ist eine selbstbeteiligung von 300€ möglich
+    - kann ich die höhe der selbstbeteiligung selbst bestimmen
+    - wie hoch kann die selbstbeteiligung sein
+    - gibt es selbstbeteiligungen unter 250€
+    - kann ich eine höhere selbstbeteiligung vereinbaren
+    - kann ich die selbstbeteiligung frei wählen
+    - welche optionen für die selbstbeteiligung gibt es
+    - was ist eine selbstbeteiligung
+    - was bedeutet selbstbeteiligung
+    - wie funktioniert die selbstbeteiligung bei einer versicherung
+    - was heißt selbstbeteiligung
+    - wann muss ich eine selbstbeteiligung zahlen
+    - was bedeutet es wenn eine versicherung eine selbstbeteiligung hat
+    - warum ist eine selbstbeteiligung sinnvoll
+    - wozu brauche ich eine selbstbeteiligung
+    - was bringt mir eine selbstbeteiligung

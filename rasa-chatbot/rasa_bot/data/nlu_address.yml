@@ -1,0 +1,35 @@
+version: "3.1"
+
+nlu:
+
+- regex: postalcode
+  examples: |
+     - \b\d{5}\b
+
+- regex: street
+  examples: |
+     - (?:[A-ZÄÖÜ][a-zäöüß-]+)?\s?(?:[Ss]traße|[Ss]tr\.|[Ww]eg|[Pp]latz|[Gg]asse|[Aa]llee|[Rr]ing|[Ss]trasse|[Aa]venue|[Pp]romenade|[Ll]an|[Kk]anal|[Nn]eubau|[Ss]eite|[Hh]of|[Bb]rücke|[Mm]arkt|[Dd]amm|[Ww]iesen|[Tt]or|[Zz]ufahrt|[Ss]tieg|[Hh]ügel|[Aa]ngen|[Kk]reuzung|[Aa]nger)\s?\d{1,4}?
+
+
+- lookup: street
+  examples: |
+     - Berliner Straße 1
+     - Bahnhofstraße 10
+     - Mühlenweg 22
+     - Klosterstraße 33
+     - Brennerstr. 16
+
+- intent: provide_address
+  examples: |
+     - Ich wohne in der [Bamberger Straße 1](street)
+     - Meine Straße ist [Lindenweg 10](street)
+     - Ich lebe in der [Hauptstr. 5](street)
+     - Ich habe die Adresse [Berliner Straße 12](street)
+     - Mein Wohnort ist [Bahnhofstraße 10](street)
+     - Ich bin in der [Gartenstraße 5](street)
+     - Ich wohne in der [Schulweg 7](street)
+     - Die Adresse lautet [Wilhelmstraße 20](street)
+     - Wir sind auf der [Sonnenallee 14](street)
+     - Ich ziehe um in die [Mozartstraße 3](street)
+     - Wir leben in der [Hauptstraße 123](street)
+     - Ich habe das Haus an dem [Wiesenweg 44](street)

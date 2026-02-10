@@ -1,0 +1,978 @@
+version: "3.1"
+
+nlu:
+
+#_______________________synonyms____________________________
+  - synonym: Private Haftpflichtversicherung
+    examples: |
+      - private haftpflicht versicherung
+      - privaten haftpflicht versicherung
+      - private haftpflicht-versicherung
+      - privaten haftpflicht-versicherung
+      - privaten haftpflichtversicherung
+      - phpv
+      - phv
+      - haftpflicht-versicherung
+      - haftpflicht versicherung
+      - privathaftpflicht
+
+  - synonym: KFZ Versicherung
+    examples: |
+      - kfz
+      - kfz-versicherung
+      - kfzversicherung
+      - kraftfahrzeug versicherung
+
+  - synonym: Hausratversicherung
+    examples: |
+      - hausrat
+      - hausrat-versicherung
+      - hrv
+
+  - synonym: warum
+    examples: |
+      - wieso
+      - weshalb
+      - aus welchem grund
+      - zu welchem zweck
+      - wozu
+      - why
+
+  - synonym: Kind
+    examples: |
+      - Sohn
+      - Tochter
+
+  - synonym: information
+    examples: |
+      - info
+
+
+#_______________________regex____________________________
+  - regex: kfz_hsn
+    examples: |
+      - \d{4}
+
+  - regex: kfz_tsn
+    examples: |
+      - (\d{3})
+#      - ([A-Za-z]{3}|\d{3})
+
+  - regex: date
+    examples: |
+      - \b(0?[1-9]|[12][0-9]|3[01])[\/\.\-](0?[1-9]|1[0-2])[\/\.\-]((19|20)?\d{2})\b|\b((19|20)?\d{2})[\/\.\-](0?[1-9]|1[0-2])[\/\.\-](0?[1-9]|[12][0-9]|3[01])\b|\b(0?[1-9]|[12][0-9]|3[01])\s(dezember|dez|november|nov|oktober|okt|september|sep|august|aug|juli|jun|juni|mai|april|apr|märz|mar|maerz|februar|feb|januar|jan)\s((19|20)?\d{2})\b|\b((19|20)?\d{2})\s(dezember|dez|november|nov|oktober|okt|september|sep|august|aug|juli|jun|juni|mai|april|apr|märz|mar|maerz|februar|feb|januar|jan)\s(0?[1-9]|[12][0-9]|3[01])\b
+
+
+#_______________________intents____________________________
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - hallo
+      - guten morgen
+      - guten abend
+      - moin
+      - servus
+      - grüezi
+      - hallöchen
+      - huhu
+      - guten tag
+      - good mittag
+      - Hello
+      - Hallo
+      - Hi
+      - Hey
+      - Guten Tag
+      - Servus
+      - Moin
+      - Grüezi
+      - hallöchen
+      - Huhu
+      - Yoooo
+      - Servusle
+
+  - intent: goodbye
+    examples: |
+      - tschüss
+      - auf wiedersehen
+      - bis später
+      - ciao
+      - goodbye
+      - bye
+      - machs gut
+      - adieu
+      - tschau
+      - ich muss jetzt los
+      - ich verabschiede mich
+      - es war schön, mit dir zu sprechen
+      - bis zur nächsten sitzung
+      - pass auf dich auf
+      - bis dann
+      - man sieht sich
+      - bis zum nächsten mal
+      - gute nacht
+      - schönen tag noch
+
+  - intent: thankyou
+    examples: |
+      - danke
+      - vielen dank
+      - dankeschön
+      - danke dir
+      - damit hast du mir sehr geholfen
+      - super
+      - das war ja einfach
+      - prima
+      - toll
+      - klasse
+      - hervorragend
+      - gut gemacht
+
+  - intent: affirm
+    examples: |
+      - ja
+      - j
+      - ja ich möchte das
+      - jo
+      - genau
+      - natürlich
+      - das klingt gut
+      - korrekt
+      - sicher
+      - absolut
+      - selbstverständlich
+      - definitiv
+      - auf jeden Fall
+      - ganz genau
+      - stimmt
+      - das passt
+      - klar
+      - yes
+      - y
+      - indeed
+      - of course
+      - that sounds good
+      - correct
+      - einverstanden
+      - jup
+      - JA
+
+
+  - intent: deny
+    examples: |
+      - nein
+      - n
+      - niemals
+      - gefällt mir nicht
+      - auf keinen Fall
+      - nicht wirklich
+      - kommt nicht in Frage
+      - keineswegs
+      - nicht verstanden
+      - absolut nicht
+      - auf gar keinen Fall
+      - eher nicht
+      - nicht im Traum
+      - das möchte ich nicht
+      - sicher nicht
+      - no
+      - nö
+      - nee
+      - nope
+      - ich denke nicht
+      - das gefällt mir nicht
+      - niemals
+      - nicht wirklich
+      - never
+      - no way
+      - not really
+      - Nein danke
+      - Danke nein.
+
+  - intent: cancel
+    examples: |
+      - abbrechen
+      - cancel
+      - abbruch
+      - ich habe kein interesse mehr
+      - ich möchte doch keine versicherung abschließen
+
+  - intent: introduce_name
+    examples: |
+      - mein Name ist [John](name)
+      - ich heiße [Anna](name)
+      - ich bin [Peter](name)
+      - Der Name ist [Julia](name)
+      - [Max](name) hier
+      - [Lisa](name) meldet sich
+      - ich nenne mich [Sophie] (name)
+      - mein Vorname ist [Tom] (name)
+      - [Clara] (name) am Apparat
+      - [Leon] (name) ist mein Name
+      - Man nennt mich [Eva] (name)
+      - Sie sprechen mit [Felix] (name)
+      - ich werde [Maria] (name) genannt
+      - Der Name lautet [Ben] (name)
+      - [Sarah] (name) ist hier
+      - Das ist [Paul] (name)
+      - ich bin bekannt als [Robert] (name)
+      - ich bin [Ronald]
+
+  - intent: explain
+    examples: |
+      - was ist das
+      - was
+      - hä
+      - das verstehe ich nicht
+      - kannst du das erklären
+      - erklär mir das bitte genauer
+      - kannst du mir mehr informationen dazu geben
+      - ich verstehe das nicht ganz
+      - kannst du das nochmal erklären
+      - kannst du das genauer erklären
+      - was bedeutet das
+      - was heißt das
+      - wie funktioniert das
+      - kannst du mir das bitte erklären
+      - was genau bedeutet das
+      - ich brauche mehr informationen dazu
+      - kannst du mir mehr details geben
+      - erklär das bitte nochmal
+      - was genau ist damit gemeint
+      - bitte mehr details
+      - mehr infos bitte
+      - wie soll ich das verstehen
+      - ich habe das nicht verstanden
+      - erklär das bitte einfach
+      - kannst du das einfach erklären
+      - was heißt das genau
+      - kannst du das nochmal erläutern
+      - wie meinst du das
+      - was bedeutet das konkret
+      - sag mir mehr dazu
+      - erklär mir das
+      - mehr dazu bitte
+      - kannst du es nochmal anders erklären
+
+  - intent: why_information_needed
+    examples: |
+      - warum willst du das wissen
+      - warum fragst du das
+      - warum fragt ihr das
+      - warum muss ich das angeben
+      - ist das wichtig
+      - musst du das wissen
+      - brauchst du das
+      - müsst ihr diese information haben
+      - aus welchem Grund wollt ihr das wissen
+      - warum braucht ihr diese information
+      - warum fragt ihr nach diesen daten
+      - wofür braucht ihr diese angaben
+      - warum muss ich diese information geben
+      - wozu muss ich das beantworten
+      - warum sind diese informationen nötig
+      - warum fragt ihr danach
+      - warum ist das wichtig für euch
+      - wieso braucht ihr diese angabe
+      - warum muss ich diese frage beantworten
+      - weshalb ist diese information wichtig
+      - warum wird das gefragt
+      - warum wird das abgefragt
+      - warum will die versicherung das wissen
+      - wofür ist diese information erforderlich
+
+  - intent: decide_for_insurance_type
+    examples: |
+      - [kfz]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - [phpv]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - zur [haftpflicht]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - zur [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich möchte eine [private haftpflicht-versicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"} abschließen.
+      - ich würde mich gerne zur [privaten haftpflichtversicherung]{"entity":"insurance_type","value":"Private Haftpflichtversicherung"} beraten lassen
+      - die [kfz versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich interessiere mich für die [privathaftpflicht]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich brauche hilfe bei der [kfz versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich interessiere mich für eine [hausrat-versicherung]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - welche optionen gibt es für [hausrat-versicherung]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich möchte mehr über die [hausrat-versicherung]{"entity":"insurance_type", "value":"Hausratversicherung"} erfahren
+      - ich brauche informationen zur [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich möchte zur [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"} beraten werden
+      - ich möchte empfehlungen zur [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"} haben
+      - ich suche eine gute [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich benötige vorschläge für eine [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich interessiere mich für eine [hrv]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich will eine [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"} abschließen
+      - ich brauche infos zur [hrv]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich benötige eine empfehlung für eine [hausratversicherung]{"entity":"insurance_type", "value":"Hausratversicherung"}
+      - ich möchte wissen, welche [hausratversicherungen]{"entity":"insurance_type", "value":"Hausratversicherung"} gut sind
+      - ich brauche informationen zur [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - welche [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"} ist die beste?
+      - ich interessiere mich für eine [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich möchte zur [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"} beraten werden
+      - ich möchte empfehlungen zur [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"} haben
+      - ich suche eine gute [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich benötige vorschläge für eine [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich will eine [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"} abschließen
+      - ich brauche infos zur [kfz]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich benötige eine empfehlung für eine [kfz-versicherung]{"entity":"insurance_type", "value":"KFZ Versicherung"}
+      - ich möchte wissen, welche [kfz-versicherungen]{"entity":"insurance_type", "value":"KFZ Versicherung"} gut sind
+      - ich brauche informationen zur [privaten haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich interessiere mich für eine [phv]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich möchte zur [haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"} beraten werden
+      - ich möchte empfehlungen zur [haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"} haben
+      - ich suche eine gute [haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich benötige vorschläge für eine [haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich will eine [haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"} abschließen
+      - ich brauche infos zu [haftpflichtversicherungen]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich benötige eine empfehlung für eine [haftpflichtversicherung]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"}
+      - ich möchte wissen, welche [haftpflichtversicherungen]{"entity":"insurance_type", "value":"Private Haftpflichtversicherung"} gut sind
+
+  # User möchte einen Tarif für eine bestimmte Versicherung abschließen, Einstieg in den entsprechenden form
+  - intent: request_tariff_information
+    examples: |
+      - ich würde gerne eine [phpv]{"entity":"insurance_type"} abschließen
+      - berate mich zu tarifen der [kfz-versicherung]{"entity":"insurance_type"}
+      - ich möchte einen tarif abschließen
+      - tarif abschließen
+      - tarif information
+      - wie kann ich eine [private haftpflicht versicherung]{"entity":"insurance_type"} abschließen
+      - Abschluss
+      - Tarifabschluss
+
+  - intent: choose_slot_to_change
+    examples: |
+      - [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [für wen die versicherung gilt]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [für wen die versicherung ist]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [wen ich versichere]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - die [versicherten personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - die [versicherte person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird
+      - [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} sein wird
+      - [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} sein soll
+      - [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} werden soll
+      - [welche personen abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} sind
+      - [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird
+      - die [begünstigten personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - der [Begünstigte]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [wen die versicherung]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} absichert
+      - die [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [welche person abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} sein soll
+      - die [versicherte Person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ist
+      - [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird
+      - [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} sein soll
+      - [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird
+      - die [Begünstigten]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - den [Begünstigten]{"entity":"slot_to_change", "value":"Versicherungsnehmer"}
+      - [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} werden soll
+      - [welche Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} abgesichtert sind
+      - [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} werden soll
+      - [welche Person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} abgedeckt ist
+      - ich möchte den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ändern
+      - ich will die [versicherte Person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} anpassen
+      - ich will die [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} anpassen
+      - ich will den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} verändern
+      - ich würde gerne die [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} verändern
+      - ich möchte ändern [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} sein soll
+      - kann ich die [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} noch ändern
+      - könnte ich den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} anpassen
+      - ich würde gerne [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ist ändern
+      - kann ich den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ändern
+      - könnte ich anpassen [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ist
+      - ich muss den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} korrigieren
+      - ich habe einen fehler bei der [versicherten Person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} gemacht
+      - können wir die [Begünstigten]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} nochmal überprüfen
+      - bitte ändern sie [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird
+      - wie kann ich den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} anpassen
+      - ist es möglich die [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} zu ändern
+      - ich habe den falschen [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} angegeben
+      - ich möchte die information ändern [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ist
+      - können sie mir helfen die [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} zu ändern
+      - ich würde gerne wissen wie ich den [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} korrigieren kann
+      - ich habe mich beim [Versicherungsnehmer]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} vertan
+      - die falschen [Begünstigten]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wurden angegeben
+      - ich brauche eine änderung bei [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird
+      - könnten wir die information zu [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} noch ändern
+      - ich habe einen tippfehler bei der [versicherten Person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} gemacht
+      - ich muss die angabe zu [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ist aktualisieren
+      - bitte helfen sie mir die [Begünstigten]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} zu ändern
+      - können wir die [versicherte Person]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} noch anpassen
+      - ich habe versehentlich die falschen [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} eingetragen
+      - ich möchte die [versicherten Personen]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} erneut festlegen
+      - die daten zu [wer versichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} ist sind nicht korrekt
+      - ich würde gerne [wer abgesichert]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} wird nochmal anpassen
+      - ich will die [Begünstigten]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} aktualisieren
+      - ich habe einen fehler bei der eingabe des [Versicherungsnehmers]{"entity":"slot_to_change", "value":"Versicherungsnehmer"} gemacht
+      - [Beruf]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine [berufliche Situation]{"entity":"slot_to_change", "value":"Beruf"}
+      - das [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine [Arbeit]{"entity":"slot_to_change", "value":"Beruf"}
+      - wo ich [arbeite]{"entity":"slot_to_change", "value":"Beruf"}
+      - als was ich [arbeite]{"entity":"slot_to_change", "value":"Beruf"}
+      - [womit ich mein Geld verdiene]{"entity":"slot_to_change", "value":"Beruf"}
+      - was ich [beruflich]{"entity":"slot_to_change", "value":"Beruf"} mache
+      - [Job]{"entity":"slot_to_change", "value":"Beruf"}
+      - mein [Job]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine [Tätigkeit]{"entity":"slot_to_change", "value":"Beruf"}
+      - das [Beschäftigungsverhältnis]{"entity":"slot_to_change", "value":"Beruf"}
+      - wo ich [beschäftigt]{"entity":"slot_to_change", "value":"Beruf"} bin
+      - mein [Arbeitsplatz]{"entity":"slot_to_change", "value":"Beruf"}
+      - als was ich [beschäftigt]{"entity":"slot_to_change", "value":"Beruf"} bin
+      - was ich [beruflich mache]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine [berufliche Tätigkeit]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine aktuelle [Arbeitsstelle]{"entity":"slot_to_change", "value":"Beruf"}
+      - [was ich beruflich mache]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine aktuelle [Anstellung]{"entity":"slot_to_change", "value":"Beruf"}
+      - was ich zurzeit [arbeite]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine [Arbeitssituation]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine aktuelle [Berufssituation]{"entity":"slot_to_change", "value":"Beruf"}
+      - meine [Beschäftigung]{"entity":"slot_to_change", "value":"Beruf"}
+      - [was ich arbeite]{"entity":"slot_to_change", "value":"Beruf"}
+      - ich möchte meinen [Beruf]{"entity":"slot_to_change", "value":"Beruf"} ändern
+      - ich habe den falschen [Beruf]{"entity":"slot_to_change", "value":"Beruf"} angegeben
+      - ich will die [berufliche Situation]{"entity":"slot_to_change", "value":"Beruf"} anpassen
+      - können wir den [Beruf]{"entity":"slot_to_change", "value":"Beruf"} nochmal überprüfen
+      - ich habe mich beim [Beruf]{"entity":"slot_to_change", "value":"Beruf"} vertippt
+      - ich muss den [Beruf]{"entity":"slot_to_change", "value":"Beruf"} korrigieren
+      - mein [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} hat sich geändert
+      - ich brauche eine änderung beim [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"}
+      - ich habe einen fehler bei der angabe meines [Berufs]{"entity":"slot_to_change", "value":"Beruf"} gemacht
+      - ich möchte die angabe zu meiner [beruflichen Situation]{"entity":"slot_to_change", "value":"Beruf"} ändern
+      - bitte ändern sie meinen [Beruf]{"entity":"slot_to_change", "value":"Beruf"}
+      - wie kann ich meinen [Beruf]{"entity":"slot_to_change", "value":"Beruf"} anpassen
+      - ich möchte mein [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} korrigieren
+      - ich habe den [Beruf]{"entity":"slot_to_change", "value":"Beruf"} falsch angegeben
+      - ist es möglich die angabe zu meinem [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} zu ändern
+      - ich möchte meine angabe zur [beruflichen Situation]{"entity":"slot_to_change", "value":"Beruf"} anpassen
+      - ich will die angabe zu meinem [Beruf]{"entity":"slot_to_change", "value":"Beruf"} aktualisieren
+      - ich würde gerne die angabe zu meinem [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} ändern
+      - können sie mir helfen meine [berufliche Situation]{"entity":"slot_to_change", "value":"Beruf"} zu ändern
+      - ich habe das falsche [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} eingetragen
+      - ich habe die angabe zu meinem [Beruf]{"entity":"slot_to_change", "value":"Beruf"} falsch gemacht
+      - können wir die [berufliche Situation]{"entity":"slot_to_change", "value":"Beruf"} überprüfen
+      - mein [Arbeitsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} hat sich geändert und ich möchte es anpassen
+      - ich möchte meinen [Job]{"entity":"slot_to_change", "value":"Beruf"} ändern
+      - können wir meine [Tätigkeit]{"entity":"slot_to_change", "value":"Beruf"} anpassen
+      - mein [Beschäftigungsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} hat sich geändert
+      - ich habe das falsche [Beschäftigungsverhältnis]{"entity":"slot_to_change", "value":"Beruf"} angegeben
+      - ich will den [Arbeitsplatz]{"entity":"slot_to_change", "value":"Beruf"} korrigieren
+      - ich habe mich bei meiner [Tätigkeit]{"entity":"slot_to_change", "value":"Beruf"} vertippt
+      - ich möchte die angabe ändern, wo ich [beschäftigt]{"entity":"slot_to_change", "value":"Beruf"} bin
+      - können sie meinen [Job]{"entity":"slot_to_change", "value":"Beruf"} aktualisieren
+      - ich will als was ich [beschäftigt]{"entity":"slot_to_change", "value":"Beruf"} bin anpassen
+      - ich brauche eine änderung bei meiner [beruflichen Tätigkeit]{"entity":"slot_to_change", "value":"Beruf"}
+      - ich habe den fehler gemacht und das falsche angegeben, was ich [beruflich mache]{"entity":"slot_to_change", "value":"Beruf"}
+      - können sie mir helfen meine [Beschäftigung]{"entity":"slot_to_change", "value":"Beruf"} zu ändern
+      - ich möchte meine aktuelle [Anstellung]{"entity":"slot_to_change", "value":"Beruf"} ändern
+      - ich will die angabe korrigieren, was ich zurzeit [arbeite]{"entity":"slot_to_change", "value":"Beruf"}
+      - mein [Job]{"entity":"slot_to_change", "value":"Beruf"} ist nicht korrekt angegeben
+      - die angabe zu meiner [Arbeitssituation]{"entity":"slot_to_change", "value":"Beruf"} stimmt nicht
+      - bitte ändern sie meine aktuelle [Berufssituation]{"entity":"slot_to_change", "value":"Beruf"}
+      - ich möchte die daten zu meiner [Beschäftigung]{"entity":"slot_to_change", "value":"Beruf"} aktualisieren
+      - können wir noch anpassen, was ich [arbeite]{"entity":"slot_to_change", "value":"Beruf"}
+      - ich habe eine falsche angabe gemacht, was ich [beruflich mache]{"entity":"slot_to_change", "value":"Beruf"}
+      - es gibt einen fehler bei meiner aktuellen [Arbeitsstelle]{"entity":"slot_to_change", "value":"Beruf"}
+      - ich muss angeben, dass sich meine [Arbeitssituation]{"entity":"slot_to_change", "value":"Beruf"} geändert hat
+      - ich will korrigieren, als was ich [beschäftigt]{"entity":"slot_to_change", "value":"Beruf"} bin
+      - [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ob ich in den letzten 5 jahren [Schäden gemeldet]{"entity":"slot_to_change", "value":"Schadenfreiheit"} habe
+      - wieviele [Schäden ich hatte]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ob ich [Schäden hatte]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - meine [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ob ich einen [Vorschaden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} hatte
+      - wie viele [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ich hatte
+      - ich möchte meine [Schadensfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ändern
+      - ich habe mich bei der [Schadenfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} vertippt
+      - ich will die angabe zu meinen [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} korrigieren
+      - können wir die [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} nochmal überprüfen
+      - ich habe die falsche angabe gemacht, wie viele [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ich hatte
+      - ich möchte die daten zu meinen [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ändern
+      - können sie meine angabe zu den [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} anpassen
+      - ich habe eine falsche antwort zur [Schadensfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} gegeben
+      - ich möchte angeben, dass ich keine [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} habe
+      - ich möchte die [Schadenfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} aktualisieren
+      - bitte ändern sie meine angabe zu den [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ich habe falsche daten zu meinen [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} gemacht
+      - die information über meine [Schadensfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ist nicht korrekt
+      - ich will angeben, dass ich [Schäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} hatte
+      - ich hatte doch [Schäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ich hatte doch keine [Schäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ich hatte doch [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ich hatte doch keine [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ich habe das feld zur [Schadenfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} falsch ausgefüllt
+      - ich möchte meine angabe zu den [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} korrigieren
+      - ich habe einen fehler bei den [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} gemacht
+      - ich habe einen fehler bei der [Schadenfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} gemacht
+      - mein eintrag zur [Schadensfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} stimmt nicht
+      - ich möchte die daten zu meinen [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ändern
+      - ich will korrigieren, ob ich [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} hatte
+      - können wir die information zu den [Schadensmeldungen]{"entity":"slot_to_change", "value":"Schadenfreiheit"} ändern
+      - ich muss die [Schadenfreiheit]{"entity":"slot_to_change", "value":"Schadenfreiheit"} berichtigen
+      - ich möchte die angabe zu meinen [Schäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} aktualisieren
+      - ich habe bei den [Schäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} einen fehler gemacht
+      - bitte passen sie meine angabe zu den [Vorschäden]{"entity":"slot_to_change", "value":"Schadenfreiheit"} an
+      - ich war doch [schadenfrei]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - ich war doch nicht [schadenfrei]{"entity":"slot_to_change", "value":"Schadenfreiheit"}
+      - [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - ob ich eine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} möchte
+      - die höhe der [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - [wie viel ich selbst zahle]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - die [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} im schadensfall
+      - wie hoch meine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} ist
+      - ob ich [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} will
+      - ich möchte die [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} ändern
+      - können wir die angabe zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} anpassen
+      - ich will meine angabe zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} korrigieren
+      - die daten zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} sind nicht korrekt
+      - ich habe mich bei der [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} vertippt
+      - ich möchte doch eine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - ich möchte doch keine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - können sie meine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} aktualisieren
+      - ich möchte keine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} mehr
+      - ich habe angegeben, dass ich eine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} möchte, das ist falsch
+      - ich brauche eine änderung bei der [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - ich will die angabe ändern, ob ich eine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} möchte
+      - die angabe zu meiner [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} stimmt nicht
+      - ich möchte die angabe korrigieren, dass ich keine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} will
+      - die information über die [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} ist nicht korrekt
+      - ich habe eine falsche angabe zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} gemacht
+      - bitte ändern sie die angabe zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - ich habe mich bei meiner angabe zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} vertan
+      - können wir meine antwort zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} korrigieren
+      - ich will die daten zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} aktualisieren
+      - ich möchte die angabe zu meiner [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} ändern
+      - ich muss meine angabe zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} korrigieren
+      - ich habe angegeben, dass ich keine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} will, das ist falsch
+      - ich brauche eine änderung der daten zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"}
+      - die angabe, dass ich eine [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} will, ist nicht korrekt
+      - können sie die daten zur [Selbstbeteiligung]{"entity":"slot_to_change", "value":"Selbstbeteiligung"} berichtigen
+      - [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Hausart]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Gebäudeart]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Art der Immobilie]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Typ des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Objekttyp]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Immobilientyp]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [Art des Objekts]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - ich möchte die [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} ändern
+      - können wir den [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} anpassen
+      - ich will die angabe zum [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} korrigieren
+      - die daten zur [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} sind nicht korrekt
+      - ich habe mich bei der [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} vertippt
+      - bitte ändern sie den [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - ich möchte den [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} aktualisieren
+      - ich habe den falschen [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} angegeben
+      - die angabe zur [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} stimmt nicht
+      - ich will die angabe zum [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} korrigieren
+      - ich brauche eine änderung bei der [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - ich habe mich bei der angabe zum [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} vertan
+      - können wir die angabe zur [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} ändern
+      - die daten zum [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} sind nicht korrekt
+      - ich möchte die angabe zum [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} ändern
+      - ich habe falsche daten zur [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} gemacht
+      - mein [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} stimmt nicht
+      - ich möchte die angabe zum [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} korrigieren
+      - können sie die angabe zur [Art des Gebäudes]{"entity":"slot_to_change", "value":"Gebäudetyp"} aktualisieren
+      - ich will den [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} ändern
+      - ich möchte ändern, was für ein [Gebäude]{"entity":"slot_to_change", "value":"Gebäudetyp"} ich versichern möchte
+      - ich will anpassen, welcher [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert wird
+      - ich habe mich vertan bei der angabe, um welches [Gebäude]{"entity":"slot_to_change", "value":"Gebäudetyp"} es geht
+      - welcher [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert werden soll, ist falsch
+      - ich möchte ändern, was für ein [Haus]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert wird
+      - ich will korrigieren, welche [Art von Gebäude]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert wird
+      - ich habe einen fehler gemacht bei der [Art des Hauses]{"entity":"slot_to_change", "value":"Gebäudetyp"}
+      - [was für ein Objekt]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert werden soll, möchte ich ändern
+      - ich muss die angabe zu der [Gebäudeart]{"entity":"slot_to_change", "value":"Gebäudetyp"} korrigieren
+      - ich habe angegeben, dass es ein [Wohngebäude]{"entity":"slot_to_change", "value":"Gebäudetyp"} ist, das war falsch
+      - die angabe, welches [Gebäude]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert wird, ist falsch
+      - ich habe bei der angabe zu der [Gebäudeart]{"entity":"slot_to_change", "value":"Gebäudetyp"} einen fehler gemacht
+      - ich möchte die daten zu dem [Gebäudetyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} anpassen
+      - können wir die angabe ändern, um welche [Gebäudeart]{"entity":"slot_to_change", "value":"Gebäudetyp"} es sich handelt
+      - ich habe die falsche angabe gemacht, [welches Objekt]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert werden soll
+      - ich will ändern, welcher [Haustyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} angegeben wurde
+      - [welche Immobilie]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert werden soll, ist nicht korrekt
+      - um welches [Haus]{"entity":"slot_to_change", "value":"Gebäudetyp"} es geht, habe ich falsch angegeben
+      - ich muss die angabe zu dem [Objekttyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} ändern
+      - ich habe die falsche angabe zu der [Immobilie]{"entity":"slot_to_change", "value":"Gebäudetyp"} gemacht
+      - die daten zu dem [Haus]{"entity":"slot_to_change", "value":"Gebäudetyp"} stimmen nicht
+      - ich möchte ändern, welcher [Objekttyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert wird
+      - ich habe bei der [Art der Immobilie]{"entity":"slot_to_change", "value":"Gebäudetyp"} einen fehler gemacht
+      - die angabe zu dem [Haustyp]{"entity":"slot_to_change", "value":"Gebäudetyp"} ist falsch
+      - ich möchte die angabe zu der [Gebäudeart]{"entity":"slot_to_change", "value":"Gebäudetyp"} ändern
+      - was für eine [Immobilie]{"entity":"slot_to_change", "value":"Gebäudetyp"} versichert wird, möchte ich korrigieren
+      - [was für ein Objekt]{"entity":"slot_to_change", "value":"Gebäudetyp"} ich angegeben habe, war falsch
+      - [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Quadratmeter]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Wohnungsgröße]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Nutzfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Hausfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Grundfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - ich möchte die [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ändern
+      - können wir die [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} anpassen
+      - ich habe mich bei der angabe der [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} vertan
+      - ich will die angabe zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} korrigieren
+      - die daten zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} stimmen nicht
+      - die angabe zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ist falsch
+      - ich möchte die angabe zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} anpassen
+      - ich habe einen fehler gemacht bei der [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - können sie die [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} aktualisieren
+      - die angabe zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} muss geändert werden
+      - ich habe die falsche [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} angegeben
+      - ich möchte die daten zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} korrigieren
+      - ich brauche eine änderung bei der [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - bitte ändern sie die [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - die angabe der [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} war nicht korrekt
+      - die eingegebene [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} stimmt nicht
+      - ich möchte die eingabe zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ändern
+      - ich will die daten zur [Wohnfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} aktualisieren
+      - ich habe mich bei der [Größe der Wohnung]{"entity":"slot_to_change", "value":"Wohnfläche"} vertippt
+      - die angegebene [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"} ist falsch
+      - ich möchte die [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ändern
+      - die angabe zur [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ist falsch
+      - ich habe mich bei der [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"} vertan
+      - ich brauche eine änderung bei der [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - bitte ändern sie die [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - ich habe die falsche [Fläche]{"entity":"slot_to_change", "value":"Wohnfläche"} angegeben
+      - ich möchte die [Quadratmeter]{"entity":"slot_to_change", "value":"Wohnfläche"} anpassen
+      - die angabe zu den [Quadratmetern]{"entity":"slot_to_change", "value":"Wohnfläche"} stimmt nicht
+      - die eingegebenen [Quadratmeter]{"entity":"slot_to_change", "value":"Wohnfläche"} sind nicht korrekt
+      - ich will die angabe der [Quadratmeter]{"entity":"slot_to_change", "value":"Wohnfläche"} ändern
+      - können wir die angabe zu den [Quadratmetern]{"entity":"slot_to_change", "value":"Wohnfläche"} korrigieren
+      - ich möchte die [Wohnungsgröße]{"entity":"slot_to_change", "value":"Wohnfläche"} ändern
+      - die angabe zur [Wohnungsgröße]{"entity":"slot_to_change", "value":"Wohnfläche"} ist falsch
+      - die daten zur [Wohnungsgröße]{"entity":"slot_to_change", "value":"Wohnfläche"} stimmen nicht
+      - ich habe mich bei der angabe zur [Wohnungsgröße]{"entity":"slot_to_change", "value":"Wohnfläche"} vertan
+      - ich brauche eine korrektur bei der [Wohnungsgröße]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - die angabe zur [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"} muss geändert werden
+      - ich habe die falsche [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"} angegeben
+      - ich möchte die daten zur [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"} korrigieren
+      - bitte ändern sie die [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - können wir die [Größe des Hauses]{"entity":"slot_to_change", "value":"Wohnfläche"} anpassen
+      - die angabe zur [Nutzfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} stimmt nicht
+      - die daten zur [Nutzfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} müssen aktualisiert werden
+      - ich habe einen fehler gemacht bei der angabe zur [Nutzfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - können wir die [Nutzfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} korrigieren
+      - die angabe zur [Nutzfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ist nicht korrekt
+      - ich habe die falsche [Hausfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} angegeben
+      - die angabe zur [Hausfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} war nicht richtig
+      - ich möchte die daten zur [Hausfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ändern
+      - ich brauche eine korrektur bei der [Hausfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - die daten zur [Hausfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} stimmen nicht
+      - können wir die angabe zur [Grundfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} anpassen
+      - ich habe einen fehler gemacht bei der [Grundfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - die angabe zur [Grundfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} ist nicht korrekt
+      - ich möchte die [Grundfläche]{"entity":"slot_to_change", "value":"Wohnfläche"} korrigieren
+      - bitte aktualisieren sie die angabe zur [Grundfläche]{"entity":"slot_to_change", "value":"Wohnfläche"}
+      - [Adresse]{"entity":"slot_to_change", "value":"Straße"}
+      - [Straße]{"entity":"slot_to_change", "value":"Straße"}
+      - [Hausnummer]{"entity":"slot_to_change", "value":"Straße"}
+      - [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"}
+      - [Anschrift]{"entity":"slot_to_change", "value":"Straße"}
+      - [Wohnadresse]{"entity":"slot_to_change", "value":"Straße"}
+      - [Postanschrift]{"entity":"slot_to_change", "value":"Straße"}
+      - ich möchte die [Adresse]{"entity":"slot_to_change", "value":"Straße"} ändern
+      - können wir die [Adresse]{"entity":"slot_to_change", "value":"Straße"} anpassen
+      - ich habe mich bei der [Adresse]{"entity":"slot_to_change", "value":"Straße"} vertan
+      - ich brauche eine korrektur bei der [Adresse]{"entity":"slot_to_change", "value":"Straße"}
+      - die angabe zur [Adresse]{"entity":"slot_to_change", "value":"Straße"} stimmt nicht
+      - die [Adresse]{"entity":"slot_to_change", "value":"Straße"} muss geändert werden
+      - ich habe die falsche [Adresse]{"entity":"slot_to_change", "value":"Straße"} angegeben
+      - ich möchte die daten zur [Adresse]{"entity":"slot_to_change", "value":"Straße"} aktualisieren
+      - ich will die angabe zur [Adresse]{"entity":"slot_to_change", "value":"Straße"} korrigieren
+      - können sie die [Adresse]{"entity":"slot_to_change", "value":"Straße"} ändern
+      - ich möchte die angabe zur [Adresse]{"entity":"slot_to_change", "value":"Straße"} aktualisieren
+      - bitte ändern sie die [Adresse]{"entity":"slot_to_change", "value":"Straße"}
+      - die eingegebene [Adresse]{"entity":"slot_to_change", "value":"Straße"} war nicht korrekt
+      - ich möchte ändern, was ich bei der [Adresse]{"entity":"slot_to_change", "value":"Straße"} angegeben habe
+      - ich möchte die [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"} ändern
+      - die angabe zur [Straße]{"entity":"slot_to_change", "value":"Straße"} ist falsch
+      - können wir die [Hausnummer]{"entity":"slot_to_change", "value":"Straße"} anpassen
+      - ich habe mich bei der angabe zur [Straße]{"entity":"slot_to_change", "value":"Straße"} vertan
+      - ich möchte die [Hausnummer]{"entity":"slot_to_change", "value":"Straße"} aktualisieren
+      - die angabe zur [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"} stimmt nicht
+      - ich will die [Straße]{"entity":"slot_to_change", "value":"Straße"} korrigieren
+      - ich habe die falsche [Hausnummer]{"entity":"slot_to_change", "value":"Straße"} angegeben
+      - die daten zur [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"} müssen geändert werden
+      - ich möchte die angabe zur [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"} korrigieren
+      - ich möchte die [Anschrift]{"entity":"slot_to_change", "value":"Straße"} ändern
+      - können wir die [Wohnadresse]{"entity":"slot_to_change", "value":"Straße"} aktualisieren
+      - ich habe die falsche [Postanschrift]{"entity":"slot_to_change", "value":"Straße"} angegeben
+      - die angabe zur [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"} muss geändert werden
+      - ich habe mich bei der angabe zur [Wohnadresse]{"entity":"slot_to_change", "value":"Straße"} vertan
+      - die [Adresse der Immobilie]{"entity":"slot_to_change", "value":"Straße"} ist nicht korrekt
+      - die [Postanschrift]{"entity":"slot_to_change", "value":"Straße"} war falsch
+      - bitte ändern sie die [Anschrift]{"entity":"slot_to_change", "value":"Straße"}
+      - können wir die angabe zur [Adresse des Gebäudes]{"entity":"slot_to_change", "value":"Straße"} korrigieren
+      - ich will die [Straße und Hausnummer]{"entity":"slot_to_change", "value":"Straße"} anpassen
+
+  - intent: change_slot
+    examples: |
+      - ich möchte etwas anpassen
+      - ich habe mich vertippt
+      - da habe ich etwas falsches angegeben
+      - oh ich habe einen fehler gemacht
+      - kann ich etwas ändern
+      - kann ich das nochmal anpassen
+      - ich würde gerne nochmal zurück
+      - ich habe eine Änderung
+      - ich möchte das ändern
+      - ich habe eine falsche angabe gemacht
+      - das war nicht korrekt
+      - ich muss das korrigieren
+      - ich möchte etwas korrigieren
+      - kann ich das nochmal ändern
+      - ich habe etwas falsch angegeben
+      - ich habe einen fehler gemacht
+      - ich möchte es korrigieren
+      - kann ich das berichtigen
+      - das war ein fehler
+      - ich habe mich vertan
+      - ich möchte es nochmal ändern
+      - ich habe eine falsche wahl getroffen
+      - ich würde gerne etwas berichtigen
+      - ich habe es falsch gemacht
+      - ich brauche eine korrektur
+      - das war nicht richtig
+      - ich habe einen falschen wert eingegeben
+      - ich möchte zurückgehen
+
+  # Informationen für forms
+  - intent: inform
+    examples: |
+      - ich möchte die versicherung für [mich selbst]{"entity":"phpv_beneficiary", "value":"Single"} abschließen
+      - [mich]{"entity":"phpv_beneficiary", "value":"Single"}
+      - [ich]{"entity":"phpv_beneficiary", "value":"Single"}
+      - für [mich]{"entity":"phpv_beneficiary", "value":"Single"}
+      - [ich]{"entity":"phpv_beneficiary", "value":"Single"} soll der begünstigte sein
+      - [ich]{"entity":"phpv_beneficiary", "value":"Single"} soll die begünstigte sein
+
+      - [Paar]{"entity":"phpv_beneficiary", "value":"Paar"}
+      - [mich und meine partnerin]{"entity":"phpv_beneficiary", "value":"Paar"}
+      - [mich und mein partner]{"entity":"phpv_beneficiary", "value":"Paar"}
+      - ich möchte die versicherung für [mich und meinen partner]{"entity":"phpv_beneficiary", "value":"Paar"} abschließen
+      - [mich u partner]{"entity":"phpv_beneficiary", "value":"Paar"} möchte ich versichern
+      - [mich und partner]{"entity":"phpv_beneficiary", "value":"Paar"}
+      - für [mich und meinen mann]{"entity":"phpv_beneficiary", "value":"Paar"} möchte ich den versicherungsschutz
+      - kann ich [meine frau und mich]{"entity":"phpv_beneficiary", "value":"Paar"} versichern
+      - ich möchte [meine freundin und mich]{"entity":"phpv_beneficiary", "value":"Paar"} absichern
+      - die versicherung soll für [mich und meinen partner]{"entity":"phpv_beneficiary", "value":"Paar"} gelten
+      - [ich und mein freund]{"entity":"phpv_beneficiary", "value":"Paar"} sollen gemeinsam versichert werden
+      - [mein mann und ich]{"entity":"phpv_beneficiary", "value":"Paar"} sollen den schutz erhalten
+      - [mein freund und ich]{"entity":"phpv_beneficiary", "value":"Paar"} brauchen die versicherung
+      - ich möchte [meinen partner und mich]{"entity":"phpv_beneficiary", "value":"Paar"} versichern.
+
+      - [mich und meine familie]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"}
+      - [Paar mit Kind]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"}
+      - [ich mit Kind]{"entity":"phpv_beneficiary", "value":"Single mit Kind"}
+      - für [Single mit Kind]{"entity":"phpv_beneficiary", "value":"Single mit Kind"} möchte ich die versicherung
+      - die versicherung soll für [Paar mit Kind]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} gelten
+      - die versicherung soll für [mich selbst]{"entity":"phpv_beneficiary", "value":"Single"} und meine kinder sein
+      - kann ich die versicherung für [Paar mit Kind]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} abschließen
+      - [mich mit Kind]{"entity":"phpv_beneficiary", "value":"Single mit Kind"} sollen begünstigte sein
+      - ich möchte die versicherung nur für [mich]{"entity":"phpv_beneficiary", "value":"Single"} haben
+      - für [mich und meine Familie]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} brauche ich eine versicherung
+      - kann ich die versicherung für [Single mit Kind]{"entity":"phpv_beneficiary", "value":"Single mit Kind"} machen
+      - ist die versicherung für [mich]{"entity":"phpv_beneficiary", "value":"Single"} und meinen partner gültig
+      - ist der schutz für [meine kinder und mich]{"entity":"phpv_beneficiary", "value":"Single mit Kind"} verfügbar
+      - wie kann ich [meine familie und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} versichern
+      - [ich und mein sohn]{"entity":"phpv_beneficiary", "value":"Single mit Kind"} brauchen den versicherungsschutz
+      - ist [meine tochter und ich]{"entity":"phpv_beneficiary", "value":"Single mit Kind"} abgesichert
+      - wie versichere ich [meine kinder und mich]{"entity":"phpv_beneficiary", "value":"Single mit Kind"}
+      - die versicherung soll für [meine familie und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} gelten
+      - für [meine familie und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} brauche ich die versicherung
+      - für [mich, meinen partner und meine kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"}
+      - ich möchte die versicherung für [mich, meinen mann und unsere kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} abschließen
+      - [mich, meine partnerin und unseren sohn]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} sollen versichert werden
+      - kann ich die versicherung für [mich, meinen partner und meine tochter]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} machen
+      - die versicherung soll für [mich, meine kinder und meinen mann]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} gelten
+      - ich möchte die versicherung für [mich, meinen partner und unseren sohn]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} haben
+      - für [mich, meine partnerin und unsere kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} brauche ich eine versicherung
+      - ist die versicherung für [mich, meinen partner und meine kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} gültig
+      - [mich, meinen mann und unsere kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} möchten gemeinsam versichert werden
+      - für [mich, meinen partner und meine kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} möchte ich den schutz
+      - die versicherung soll für [meine kinder, mich und meinen partner]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} gelten
+      - für [meinen partner, mich und unsere kinder]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} brauche ich eine versicherung
+      - ich möchte [meine tochter, meinen mann und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} versichern
+      - kann ich die versicherung für [meinen sohn, meinen partner und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} machen
+      - [meine kinder, mein partner und ich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} möchten versichert werden
+      - für [meine partnerin, unsere kinder und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} möchte ich eine versicherung
+      - [meinen mann, unsere kinder und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} möchte ich absichern
+      - ich benötige den schutz für [meine kinder, meinen partner und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"}
+      - die versicherung soll für [mich, meine kinder und meinen mann]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} gelten
+      - für [meinen partner, unsere kinder und mich]{"entity":"phpv_beneficiary", "value":"Paar mit Kind"} möchte ich die versicherung abschließen
+      - [student]{"entity":"phpv_employment_type", "value":"Student"}
+      - [student:in]{"entity":"phpv_employment_type", "value":"Student"}
+      - Bin [student:in]{"entity":"phpv_employment_type", "value":"Student"}
+      - [beamter]{"entity":"phpv_employment_type", "value":"Beamter"}
+      - [Beamte:r]{"entity":"phpv_employment_type", "value":"Beamter"}
+      - [Beamtin]{"entity":"phpv_employment_type", "value":"Beamter"}
+      - [Beamt:in]{"entity":"phpv_employment_type", "value":"Beamter"}
+      - Ich bin [Beamt:in]{"entity":"phpv_employment_type", "value":"Beamter"}
+      - [rentner]{"entity":"phpv_employment_type", "value":"Rentner"}
+      - [angestellter]{"entity":"phpv_employment_type", "value":"Angestellter"}
+      - [angestellte]{"entity":"phpv_employment_type", "value":"Angestellter"}
+      - ich bin [angestellte]{"entity":"phpv_employment_type", "value":"Angestellter"}
+      - ich bin [angestellter]{"entity":"phpv_employment_type", "value":"Angestellter"}
+      - [Arbeitslos]{"entity":"phpv_employment_type", "value":"Arbeitslos"}
+      - ich [studiere]{"entity":"phpv_employment_type", "value":"Student"}
+      - ich bin noch im [Studium]{"entity":"phpv_employment_type", "value":"Student"}
+      - seit letztem jahr bin ich [pensionär]{"entity":"phpv_employment_type", "value":"Rentner"}
+      - ich bin [studi]{"entity":"phpv_employment_type", "value":"Student"}
+      - ich bin [verbeamtet]{"entity":"phpv_employment_type", "value":"Beamter"}
+      - als [studentin]{"entity":"phpv_employment_type", "value":"Student"}
+      - [studentin]{"entity":"phpv_employment_type", "value":"Student"}
+      - [Student]{"entity":"phpv_employment_type", "value":"Student"}
+      - ich bin [in rente]{"entity":"phpv_employment_type", "value":"Rentner"}
+      - ich bin in einem unternehmen [angestellt]{"entity":"phpv_employment_type", "value":"Angestellter"}
+      - ich bin [arbeitslos]{"entity":"phpv_employment_type", "value":"Arbeitslos"}
+      - ich [beziehe bürgergeld]{"entity":"phpv_employment_type", "value":"Arbeitslos"}
+      - ich arbeite als [werkstudentin]{"entity":"phpv_employment_type", "value":"Student"}
+      - zur zeit bin ich [werkstudent]{"entity":"phpv_employment_type", "value":"Student"}
+      - mein haus ist ein [Einfamilienhaus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - ich wohne in einem [Einfamilienhaus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - es handelt sich um ein [Haus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - das ist ein [Reihenhaus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - wir haben ein [Bungalow]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - ich habe eine [Doppelhaushälfte]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - es ist ein [freistehendes Haus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - das gebäude ist ein [Zweifamilienhaus]{"entity":"hrv_coverage", "value":"Zweifamilienhaus"}
+      - ich lebe in einem [Zweifamilienhaus]{"entity":"hrv_coverage", "value":"Zweifamilienhaus"}
+      - das ist ein [Haus mit zwei Wohnungen]{"entity":"hrv_coverage", "value":"Zweifamilienhaus"}
+      - wir wohnen in einem [geteilten Haus]{"entity":"hrv_coverage", "value":"Zweifamilienhaus"}
+      - ich wohne in einer [Wohnung im Mehrfamilienhaus]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - es ist eine [Wohnung]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - das ist ein [Apartment]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - ich habe eine [Eigentumswohnung]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - es ist eine [Duplex-Wohnung]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - es handelt sich um ein [Mehrparteienhaus]{"entity":"hrv_coverage", "value":"Zweifamilienhaus"}
+      - ich lebe in einem [Hochhaus]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - wir wohnen in einem [Wohnblock]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - [Wohnung]{"entity":"hrv_coverage", "value":"Wohnung im Mehrfamilienhaus"}
+      - [Einfamilienhaus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - [Haus]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - [Doppelhaushälfte]{"entity":"hrv_coverage", "value":"Einfamilienhaus"}
+      - [Zweifamilienhaus]{"entity":"hrv_coverage", "value":"Zweifamilienhaus"}
+      - meine hsn nummer lautet [2735](kfz_hsn)
+      - [9126](kfz_hsn)
+      - [0000](kfz_hsn)
+      - [6928](kfz_hsn)
+      - [1058](kfz_hsn)
+      - [382](kfz_tsn)
+      - [000](kfz_tsn)
+      - [113](kfz_tsn)
+      - [563](kfz_tsn)
+      - meine herstellernummer ist die [0000](kfz_hsn)
+      - meine tsn nummer lautet [120](kfz_tsn)
+      - meine tsn nummer lautet [001](kfz_tsn)
+      - [0429] ist meine hsnnummer
+      - die hsn ist [1234](kfz_hsn)
+      - das ist [023](kfz_tsn)
+      - die tsn ist [KGE](kfz_tsn)
+      - das müsste [LMW](kfz_tsn) sein
+      - die herstellernummer ist [0398](kfz_hsn)
+      - die typschlüsselnummer ist [JWN](kfz_tsn)
+      - die typschlüsselnummer lautet [982](kfz_tsn)
+#      - [BCX](kfz_tsn)
+#      - [kff](kfz_tsn)
+#      - [nee](kfz_tsn)
+#      - [aaa](kfz_tsn)
+#      - [kdf](kfz_tsn)
+#      - [KDP](kfz_tsn)
+#      - [OFS](kfz_tsn)
+#      - [NRK](kfz_tsn)
+
+  - intent: provide_date
+    examples: |
+      - [01-01-2026]{"entity": "date", "role": "unspecified"}
+      - [31.12.1978]{"entity": "date", "role": "unspecified"}
+      - [24/04/2008]{"entity": "date", "role": "unspecified"}
+      - [31. Juli 1997]{"entity": "date", "role": "unspecified"}
+      - am [23.09.1992]{"entity": "date", "role": "unspecified"}
+      - zum [14.08.2000]{"entity": "date", "role": "unspecified"}
+      - bis zum [12.12.24]{"entity": "date", "role": "unspecified"}
+      - seit dem [3. Juli 2018]{"entity": "date", "role": "unspecified"}
+      - vom [15. April 2021]{"entity": "date", "role": "unspecified"}
+      - ab [1. Mai 2023]{"entity": "date", "role": "unspecified"}
+      - bis [20. Oktober 22]{"entity": "date", "role": "unspecified"}
+      - am [30. Juni 2019]{"entity": "date", "role": "unspecified"}
+      - seit [4. Apr 2015]{"entity": "date", "role": "unspecified"}
+      - am [25. Dezember 2023]{"entity": "date", "role": "unspecified"} gerne
+      - zu [31. Okt 2020]{"entity": "date", "role": "unspecified"}
+      - bis spätestens [9. November 2025]{"entity": "date", "role": "unspecified"}
+      - ab dem [13. März 17]{"entity": "date", "role": "unspecified"}
+      - für den [17. Februar 2016]{"entity": "date", "role": "unspecified"}
+      - am [2. Januar 2022]{"entity": "date", "role": "unspecified"} wäre ideal
+      - bis zum [5. August 2030]{"entity": "date", "role": "unspecified"}
+      - zum [8. März 2021]{"entity": "date", "role": "unspecified"} bitte
+      - bis [31.12.29]{"entity": "date", "role": "unspecified"} gültig
+      - für den [7. Juli 27]{"entity": "date", "role": "unspecified"}
+      - nur bis [11. November 22]{"entity": "date", "role": "unspecified"}
+      - bis spätestens [6. Juni 2024]{"entity": "date", "role": "unspecified"}
+      - zum [9. September 2028]{"entity": "date", "role": "unspecified"}
+      - am [01-04-2025]{"entity": "date", "role": "unspecified"} starten
+      - am [2023-12-31]{"entity": "date", "role": "unspecified"}
+      - ab [2024.03.15]{"entity": "date", "role": "unspecified"}
+      - bis [2025/06/01]{"entity": "date", "role": "unspecified"}
+      - am [10.01.26]{"entity": "date", "role": "unspecified"}
+      - für den [2023-07-20]{"entity": "date", "role": "unspecified"}
+      - ab [01. März 2025]{"entity": "date", "role": "unspecified"}
+      - die erstregistrierung ist am [03. februar 2025]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - das datum der erstzulassung ist der [12.12.2024]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - geplante erstzulassung am [15.04.2023]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - die erstzulassung erfolgt am [01. märz 2024]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - das fahrzeug wird am [2025-02-03]{"entity": "date", "role": "kfz_planned_first_registration"} zugelassen
+      - geplantes datum für die erstzulassung ist der [10.01.26]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - erstzulassung: [2023/04/15]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - das fahrzeug soll zum [01.05.2023]{"entity": "date", "role": "kfz_planned_first_registration"} zugelassen werden
+      - angestrebtes datum der erstzulassung ist der [20-10-2024]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - erstregistrierung geplant für [2025-11-01]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - die erstzulassung ist für den [31. dezember 2023]{"entity": "date", "role": "kfz_planned_first_registration"} vorgesehen
+      - das datum für die geplante erstzulassung ist [01.06.2024]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - geplantes zulassungsdatum ist der [15. juli 2022]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - die erstzulassung soll am [5. mai 2023]{"entity": "date", "role": "kfz_planned_first_registration"} erfolgen
+      - erstzulassung vorgesehen für [30.09.2022]{"entity": "date", "role": "kfz_planned_first_registration"}
+      - mein geburtsdatum ist [15. Mai 1990]{"entity": "date", "role": "birth_date"}
+      - ich wurde am [22. Dezember 1985]{"entity": "date", "role": "birth_date"} geboren
+      - geboren bin ich am [1. Januar 2000]{"entity": "date", "role": "birth_date"}
+      - mein geburtstag ist der [3. März 1995]{"entity": "date", "role": "birth_date"}
+      - ich bin am [10. Oktober 1999]{"entity": "date", "role": "birth_date"} geboren
+      - der [5. April 1993]{"entity": "date", "role": "birth_date"} ist mein geburtsdatum
+      - mein geburtsdatum ist [15.05.1990]{"entity": "date", "role": "birth_date"}
+      - mein geburtsdatum ist der [15/05/1994]{"entity": "date", "role": "birth_date"}
+      - ich wurde am [22.12.1985]{"entity": "date", "role": "birth_date"} geboren
+      - ich wurde am [19/12/1980]{"entity": "date", "role": "birth_date"} geboren
+      - geboren bin ich am [01.01.2000]{"entity": "date", "role": "birth_date"}
+      - geboren bin ich am [01/01/2000]{"entity": "date", "role": "birth_date"}
+      - mein geburtstag ist der [03.03.1995]{"entity": "date", "role": "birth_date"}
+      - mein geburtstag ist der [03/03/2004]{"entity": "date", "role": "birth_date"}
+      - ich bin am [10.10.1999]{"entity": "date", "role": "birth_date"} geboren
+      - ich bin am [10/10/2001]{"entity": "date", "role": "birth_date"} geboren
+      - der [05.04.1993]{"entity": "date", "role": "birth_date"} ist mein geburtsdatum
+      - der [05/04/1973]{"entity": "date", "role": "birth_date"} ist mein geburtsdatum
+      - der versicherungsbeginn soll am [01.01.2024]{"entity": "date", "role": "insurance_start_date"} sein
+      - ich hätte gerne den versicherungsbeginn zum [01. Juni 2024]{"entity": "date", "role": "insurance_start_date"}
+      - der versicherungsbeginn sollte am [ersten Juli]{"entity": "date", "role": "insurance_start_date"} sein
+      - der versicherungsbeginn soll zum [01. Mai]{"entity": "date", "role": "insurance_start_date"} starten
+      - ich möchte den versicherungsbeginn ab dem [1. Januar 2025]{"entity": "date", "role": "insurance_start_date"}
+
+  - intent: provide_living_area
+    examples: |
+      - meine wohnfläche beträgt [75](living_area) quadratmeter.
+      - ich habe eine wohnfläche von [120](living_area) m².
+      - die wohnfläche meiner wohnung ist [85](living_area) quadratmeter, inklusive balkon.
+      - mein haus hat eine wohnfläche von [200](living_area) quadratmetern, auf zwei etagen verteilt.
+      - ungefähr [70](living_area) quadratmeter.
+      - ich schätze, es sind etwa [90](living_area) m².
+      - die wohnfläche beträgt [100](living_area) m², und ich habe auch einen kleinen garten.
+      - meine wohnung hat [65](living_area) quadratmeter, aber die decken sind sehr hoch, was es geräumig erscheinen lässt.
+      - meine wohnfläche ist [20](living_area) quadratfuß.
+      - es sind [60](living_area) m², wenn man den flur nicht mitrechnet.
+      - ich glaube [30](living_area) qm
+      - [10](living_area) qm
+      - ungefähr [100](living_area)

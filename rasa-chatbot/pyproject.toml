@@ -1,0 +1,68 @@
+[project]
+name = "rasa-service"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "roman.ruppel@adesso.de"},
+    {name = "mona.breinig@adesso.de"},
+    {name = "marco.heinisch@adesso.de"},
+]
+readme = "README.md"
+requires-python = "~3.9"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+
+# Dependencies (packages)
+
+[tool.poetry.dependencies]
+# Add using 'poetry add <package-name>'
+rasa = ">=2.6.0"
+pyspellchecker = "~0.8.1"
+sqlalchemy = "< 2.0"
+
+[tool.poetry.group.dev.dependencies]
+# Add using 'poetry add <package-name> --dev'
+pylint = ">1.0.0"
+isort = "^6.0.0"
+pre-commit = "^4.1.0"
+
+
+# Configurations
+
+[tool.isort]
+py_version = 39  # https://github.com/timothycrosley/isort/
+line_length = 100
+known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
+sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+include_trailing_comma = true
+profile = "black"
+multi_line_output = 3
+indent = 4
+color_output = true
+
+[tool.pylint.'MESSAGES CONTROL']
+ignore = [
+    "rasa_bot/custom_components/resources"
+]
+disable = [
+    'no-member',
+    'import-error',
+    'wrong-import-order',
+    'invalid-name',
+    'line-too-long',
+    'too-few-public-methods',
+]
+
+#[tool.flakeheaven]
+#exclude = [
+#    'build',
+#]
+
+[tool.flakeheaven.plugins]
+pycodestyle = ["-W503", "-E501"]

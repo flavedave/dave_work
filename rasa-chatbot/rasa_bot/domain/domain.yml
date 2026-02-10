@@ -1,0 +1,516 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - cancel
+  - thankyou
+  - affirm
+  - deny
+  - decide_for_insurance_type
+  - request_tariff_information
+  - inform
+  - faq
+  - explain
+  - provide_date
+  - why_information_needed
+  - introduce_name
+  - provide_address
+  - provide_living_area
+  - change_slot
+  - choose_slot_to_change
+  - start_conversation  #"\start_conversation" will trigger bot introduction
+
+entities:
+  - insurance_type
+  - phpv_beneficiary
+  - phpv_employment_type
+  - date:
+      roles:
+        - unspecified
+        - kfz_planned_first_registration
+        - birth_date
+        - insurance_start_date
+  - kfz_hsn
+  - kfz_tsn
+  - name
+  - hausrat
+  - kfz
+  - haftpflicht
+  - street
+  - city
+  - postalcode
+  - public_service
+  - living_area
+  - hrv_coverage
+  - slot_to_change
+
+actions:
+  - action_validate_slot_mappings
+  - validate_kfz_form
+  - validate_phpv_form
+  - validate_hrv_form
+  - action_reset_slot_to_change
+  - action_llm_response
+
+slots:
+  insurance_type:
+    type: categorical
+    values:
+      - Private Haftpflichtversicherung
+      - KFZ Versicherung
+      - Hausratversicherung
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: insurance_type
+
+  slot_to_change:
+    type: categorical
+    values:
+      - Versicherungsnehmer
+      - Beruf
+      - Schadenfreiheit
+      - Selbstbeteiligung
+      - Gebäudetyp
+      - Wohnfläche
+      - Straße
+      - Geburtsdatum
+      - Versicherungsbeginn
+      - Glas Zusatzversicherung
+      - Fahrrad Zusatzversicherung
+      - Haus und Wohnungsschutzbrief
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: slot_to_change
+        intent: choose_slot_to_change
+
+  name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: name
+
+  #TODO city und postalcode einbauen, an die richtige stelle
+  postalcode: #Postleihzahl
+    type: text
+    mappings:
+      - type: from_entity
+        entity: postalcode
+
+  city: #Stadt
+    type: text
+    mappings:
+      - type: from_entity
+        entity: city
+
+  #_______________________phpv_slots______________________________
+
+  phpv_beneficiary:
+    type: categorical
+    values:
+      - Single
+      - Paar
+      - Paar mit Kind
+      - Single mit Kind
+    mappings:
+      - type: from_entity
+        entity: phpv_beneficiary
+        conditions:
+          - active_loop: phpv_form
+            requested_slot: phpv_beneficiary
+
+  phpv_employment_type:
+    type: categorical
+    values:
+      - Beamter
+      - Student
+      - Rentner
+      - Angestellter
+      - Arbeitslos #not in backend
+    mappings:
+      - type: from_entity
+        entity: phpv_employment_type
+        conditions:
+          - active_loop: phpv_form
+            requested_slot: phpv_employment_type
+
+  phpv_had_insurance_claims:
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions:
+          - active_loop: phpv_form
+            requested_slot: phpv_had_insurance_claims
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions:
+          - active_loop: phpv_form
+            requested_slot: phpv_had_insurance_claims
+
+  phpv_with_contribution:
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions:
+          - active_loop: phpv_form
+            requested_slot: phpv_with_contribution
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions:
+          - active_loop: phpv_form
+            requested_slot: phpv_with_contribution
+
+  #_______________________kfz_slots______________________________
+
+  kfz_hsn:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: kfz_hsn
+        conditions:
+          - active_loop: kfz_form
+            requested_slot: kfz_hsn
+
+  kfz_tsn:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: kfz_tsn
+        conditions:
+          - active_loop: kfz_form
+            requested_slot: kfz_tsn
+
+  kfz_is_registered:
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions:
+          - active_loop: kfz_form
+            requested_slot: kfz_is_registered
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions:
+          - active_loop: kfz_form
+            requested_slot: kfz_is_registered
+
+  kfz_planned_registration_date:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: date
+        role: kfz_planned_first_registration
+        conditions:
+          - active_loop: kfz_form
+            requested_slot: kfz_planned_registration_date
+      - type: from_entity
+        entity: date
+        role: unspecified
+        conditions:
+          - active_loop: kfz_form
+            requested_slot: kfz_planned_registration_date
+
+  #_______________________hrv_slots______________________________
+
+  hrv_street: #Straße
+    type: text
+    mappings:
+      - type: from_entity
+        entity: street
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_street
+
+  hrv_living_area: #Wohnfläche
+    type: float
+    mappings:
+      - type: from_entity
+        entity: living_area
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_living_area
+
+  hrv_insurance_start_date: #Start der Versicherung
+    type: text
+    mappings:
+      - type: from_entity
+        entity: date
+        role: insurance_start_date
+        conditions:
+          - active_loop: hrv_form
+            requested_slot: hrv_insurance_start_date
+      - type: from_entity
+        entity: date
+        role: unspecified
+        conditions:
+          - active_loop: hrv_form
+            requested_slot: hrv_insurance_start_date
+
+  hrv_birth_date: #Geburtsdatum
+    type: text
+    mappings:
+      - type: from_entity
+        entity: date
+        role: birth_date
+        conditions:
+          - active_loop: hrv_form
+            requested_slot: hrv_birth_date
+      - type: from_entity
+        entity: date
+        role: unspecified
+        conditions:
+          - active_loop: hrv_form
+            requested_slot: hrv_birth_date
+
+  hrv_coverage: #Was genau soll versichert werden?
+    type: categorical
+    values:
+      - Wohnung im Mehrfamilienhaus
+      - Einfamilienhaus
+      - Zweifamilienhaus
+    mappings:
+      - type: from_entity
+        entity: hrv_coverage
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_coverage
+
+  #Boolean-Slots (Intent)
+  hrv_public_service: #Arbeit im öffentlichen Dienst?
+    type: bool
+    mappings:
+      - type: from_intent #Bestätigen
+        intent: affirm
+        value: "Ja"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_public_service
+      - type: from_intent #Verneinen
+        intent: deny
+        value: "Nein"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_public_service
+
+  hrv_damage_free: #In letzten 5 Jahren kein Schaden in HRV?
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_damage_free
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_damage_free
+
+  hrv_glass_surface: #Viel Glas zum Mitversichern?
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_glass_surface
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_glass_surface
+
+  hrv_bicycle_insurance: #Fahrrad zusätzlich
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_bicycle_insurance
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_bicycle_insurance
+
+  hrv_emergency_assistance: #Schutzbrief
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: "Ja"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_emergency_assistance
+      - type: from_intent
+        intent: deny
+        value: "Nein"
+        conditions: # Slot wird nur befüllt, wenn dieses in der Form hrv_form drankommt bzw. abgefragt wird
+          - active_loop: hrv_form
+            requested_slot: hrv_emergency_assistance
+
+
+responses:
+
+  utter_default:
+    - text: "Das habe ich leider nicht verstanden. Könntest du das bitte klarer formulieren?"
+
+  utter_default_insurance_type:
+    - text: "Das habe ich leider nicht verstanden." # -> asks again for insurance type
+
+  utter_introduce:
+    - text: "Hallo, mein Name ist Frau Sonnenschein. Ich beantworte deine Fragen rund um Versicherungen und kann dir helfen, eine passende Versicherung für dich abzuschließen."
+
+  utter_goodbye:
+    - text: "Bis zum nächsten Mal."
+
+  utter_noworries:
+    - text: "Gern geschehen. Wenn ich dich noch weiter unterstützen kann, sag einfach Bescheid."
+
+  utter_ask_insurance_type:
+    - text: "Welche Versicherung interessiert dich? Ich kann dich zur privaten Haftpflichtversicherung, zur Hausratversicherung und zur KFZ Versicherung beraten."
+      buttons:
+        - title: Private Haftpflichtversicherung
+          payload: '/decide_for_insurance_type{{"insurance_type":"Private Haftpflichtversicherung"}}'
+        - title: KFZ Versicherung
+          payload: '/decide_for_insurance_type{{"insurance_type":"KFZ Versicherung"}}'
+        - title: Hausratversicherung
+          payload: '/decide_for_insurance_type{{"insurance_type":"Hausratversicherung"}}'
+
+  utter_offer_help:
+    - text: "Wenn du Fragen rund um Versicherungen hast, stehe ich dir zur Verfügung. Ich berate dich gerne zu unseren Konditionen und Tarifen."
+
+  utter_offer_help_with_insurance_type:
+    - text: "Ich kann dir helfen, deinen Tarif für die {insurance_type} zu berechnen. Darüber hinaus stehe ich dir für alle Fragen rund um die {insurance_type} zur Verfügung. Möchtest du mit der Berechnung des Tarifs beginnen?"
+      buttons:
+        - title: Ja
+          payload: '/affirm'
+        - title: Was deckt die Versicherung ab?
+          payload: 'Was deckt die Versicherung ab?'
+
+  utter_change_slot:
+    - text: "Welche Information möchtest du anpassen?"
+
+
+
+  #__________________________________________contextual_responses____________________________________________________
+
+  utter_explain:
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: phpv_beneficiary
+      text: "Du kannst wählen, ob die Private Haftpflichtversicherung nur für Schäden aufkommt, die du verursachst,
+      oder ob noch weitere Personen versichert sein sollen.
+      Du kannst dich entscheiden, sowohl deine:n Partner:in, als auch deine Kinder mit zu versichern.
+      Deine Entscheidung wird dann bei der Berechnung des Tarifs einbezogen."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: phpv_employment_type
+      text: "Um einen Tarif zu berechnen, musst du mich über deine berufliche Situation informieren.
+      Das liegt daran, dass Beamte, Studierende und Rentner:innen teilweise von günstigeren Tarifen profitieren können."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: phpv_had_insurance_claims
+      text: "Für die Berechnung deines Tarifs musst du angeben, ob du in den vergangenen 5 Jahren Schäden an deine
+      Private Haftpflichtversicherung gemeldet hast.
+      Dabei müssen auch Schadensmeldungen angegeben werden, die von der Versicherung nicht übernommen wurden."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: phpv_with_contribution
+      text: "Die Selbstbeteiligung ist der Betrag, den du im Schadensfall selbst tragen musst, bevor die Versicherung einspringt.
+      Das bedeutet: Nur die Kosten, die über die vereinbarte Selbstbeteiligung hinausgehen, werden von der Versicherung
+      übernommen. Durch die Wahl einer Selbstbeteiligung können die Beiträge gesenkt werden."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_street
+      text: "Um deinen Tarif berechnen zu können, benötige ich die Adresse des Gebäudes, das du versichern möchtest."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_public_service
+      text: "Im öffentlichen Dienst zu arbeiten, bedeutet verbeamtet zu sein.
+      Diese Information brauche ich für die Tarifberechnung deiner Hausratversicherung."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_living_area
+      text: "Ich brauche Informationen darüber, wie viele Quadratmeter Wohnfläche das Gebäude hat, welches du versichern möchtest.
+      Die Wohnfläche ist ein wichtiger Bestandteil der Tarifberechnung."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_damage_free
+      text: "Es ist relevant für die Tarifberechnung, ob du in den letzten 5 Jahren einen Schaden bei deiner Hausratversicherung gemeldet hast."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_insurance_start_date
+      text: "Der Versicherungsbeginn ist der Tag, ab dem die Versicherung gültig ist."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_birth_date
+      text: "Dein Geburtsdatum ist wichtig für die Tarifberechnung und muss daher angegeben werden."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_glass_surface
+      text: "Um dein Haus zusätzlich gegen Schäden an Glasflächen zu versichern, kannst du eine Zusatzversicherung abschließen."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_coverage
+      text: "Ich muss wissen, um welche Art von Immobilie es sich handelt. Eine einzelne Wohnung in einem Mehrfamilienhaus,
+      Ein Einfamilienhaus, darunter Fallen auch Doppelhaushälften oder ein Zweifamilienhaus, das aus zwei getrennten Wohneinheiten besteht."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_bicycle_insurance
+      text: "Es ist möglich, zusätzlich dein Fahrrad über die Hausratversicherung abzusichern."
+    - condition:
+        - type: slot
+          name: requested_slot
+          value: hrv_emergency_assistance
+      text: "Der Haus- und Wohnungsschutzbrief ist eine Zusatzleistung, die dir in Notfällen hilft.
+      Zum Beispiel bei einem Rohrbruch, Heizungsausfall oder einem velorenen Schlüssel vermitteln wir einen Handwerker und helfen schnell und unkompliziert.
+      Nach einem Einbruch helfen wir, Schlösser austauschen zu lassen oder Fenster zu reparieren."
+    - text: "Das habe ich leider nicht verstanden. Könntest du das bitte klarer formulieren?"
+
+
+
+#  utter_explain_hausrat:
+#    - text: "Eine Hausratversicherung schützt Ihr Zuhause gegen Schäden durch Feuer, Wasser oder Einbruch. Möchten Sie mehr darüber erfahren?"
+#
+#  utter_explain_kfz:
+#    - text: "Eine KFZ-Versicherung ist notwendig, um Ihr Auto abzusichern. Es gibt Haftpflicht-, Teil- und Vollkaskoversicherungen. Möchten Sie mehr darüber wissen?"
+#
+#  utter_explain_haftpflicht:
+#    - text: "Eine Haftpflichtversicherung schützt Sie vor Schäden, die Sie unbeabsichtigt Dritten zufügen. Wollen Sie mehr Informationen dazu?"
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

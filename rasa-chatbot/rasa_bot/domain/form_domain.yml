@@ -1,0 +1,244 @@
+version: "3.1"
+
+forms:
+
+  hrv_form:
+    required_slots:
+      - hrv_coverage
+      - hrv_living_area
+      - hrv_street
+      - hrv_birth_date
+      - hrv_damage_free
+      - hrv_public_service
+      - hrv_insurance_start_date
+      - hrv_glass_surface
+      - hrv_bicycle_insurance
+      - hrv_emergency_assistance
+
+  phpv_form:
+    required_slots:
+      - phpv_beneficiary
+      - phpv_employment_type
+      - phpv_had_insurance_claims
+      - phpv_with_contribution
+
+  kfz_form:
+    required_slots:
+      - kfz_hsn
+      - kfz_tsn
+      - kfz_is_registered
+      - kfz_planned_registration_date
+#    - kfz_first_registration_date
+#    - kfz_planned_insurance_start_date
+#    - kfz_owner
+#    - kfz_residence
+#    - kfz_registration_date
+#    - kfz_policy_holder
+#    - kfz_date_of_birth
+#    - kfz_employment_type
+#    - kfz_km_per_year
+#    - kfz_usage
+#    - kfz_drivers
+
+
+responses:
+
+  #____________________________general_form_related_responses____________________________
+
+  utter_begin_tariff_conversation:
+    - text: "Ich helfe dir gerne, den passenden Tarif für deine {insurance_type} zu finden."
+
+  utter_submit_insurance_form:
+    - text: "Dir werden nun die Tarife für die {insurance_type} angezeigt."
+
+  utter_cancel_insurance_form:
+    - text: "Ich verstehe, du möchtest also keinen Tarif für die {insurance_type} abschließen."
+
+
+  #____________________________hrv_form____________________________
+
+  utter_ask_hrv_form_hrv_street:
+    - text: "Als nächstes brauche ich deine Adresse. Bitte gib deine Straße und Hausnummer an."
+
+  utter_ask_hrv_form_postalcode:
+    - text: "Wie lautet deine Postleitzahl?"
+
+  utter_ask_hrv_form_hrv_public_service:
+    - text: "Arbeitest du im öffentlichen Dienst?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_ask_hrv_form_hrv_living_area:
+    - text: "Wie groß ist deine Wohnfläche in Quadratmeter?"
+
+  utter_ask_hrv_form_hrv_damage_free:
+    - text: "Warst du in den letzten 5 Jahren in der Hausratversicherung schadensfrei?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_ask_hrv_form_hrv_insurance_start_date:
+    - text: "Wann soll der Versicherungsbeginn sein?"
+
+  utter_ask_hrv_form_hrv_birth_date:
+    - text: "Teile mir bitte noch dein Geburtsdatum mit"
+
+  utter_ask_hrv_form_hrv_glass_surface:
+    - text: "Hat dein Zuhause viele Glasflächen, die du besonders schützen möchtest?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_ask_hrv_form_hrv_coverage:
+    - text: "Möchtest du eine Wohnung, ein Einfamilienhaus oder ein Zweifamilienhaus versichern?"
+      buttons:
+        - title: Wohnung im Mehrfamilienhaus
+          payload: '/inform{{"hrv_coverage":"Wohnung im Mehrfamilienhaus"}}'
+        - title: Einfamilienhaus
+          payload: '/inform{{"hrv_coverage":"Einfamilienhaus"}}'
+        - title: Zweifamilienhaus
+          payload: '/inform{{"hrv_coverage":"Zweifamilienhaus"}}'
+
+  utter_ask_hrv_form_hrv_bicycle_insurance:
+    - text: "Besitzt du ein Fahrrad, welches du zusätzlich schützen möchtest?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_ask_hrv_form_hrv_emergency_assistance:
+    - text: "Unser Haus- und Wohnungsschutzbrief bietet umfassenden Schutz bei Wasserschäden, Einbrüchen und anderen unvorhergesehenen Ereignissen. Wäre das für dich interessant?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_submit_hrv_form:
+    - text: "Danke, damit habe ich alle nötigen Informationen für die Berechnung deines Tarifs.
+    Art der Immobilie: {hrv_coverage}, Wohnfläche: {hrv_living_area} qm, Straße und Hausnummer: {hrv_street}, Geburtsdatum: {hrv_birth_date},
+    schadensfrei in den letzten 5 Jahren: {hrv_damage_free}, Arbeit im öffentlichen Dienst: {hrv_public_service},
+    Versicherungsbeginn: {hrv_insurance_start_date}, Zusatzversicherung Glas: {hrv_glass_surface}, Zusatzversicherung Fahrrad: {hrv_bicycle_insurance},
+    Haus- und Wohnungsschutzbrief: {hrv_emergency_assistance}.
+    Dir werden nun die passenden Tarife angezeigt."
+
+
+  #____________________________phpv_form____________________________
+
+  utter_ask_phpv_beneficiary:
+    - text: "Welche Personen möchtest du versichern?"
+      buttons:
+        - title: mich
+          payload: '/inform{{"phpv_beneficiary":"Single"}}'
+        - title: mich und meine:n Partner:in
+          payload: '/inform{{"phpv_beneficiary":"Paar"}}'
+        - title: Paar mit Kind
+          payload: '/inform{{"phpv_beneficiary":"Paar mit Kind"}}'
+        - title: Single mit Kind
+          payload: '/inform{{"phpv_beneficiary":"Single mit Kind"}}'
+
+  utter_ask_phpv_employment_type:
+    - text: "Wie ist deine aktuelle berufliche Situation?"
+      buttons:
+        - title: Beamte:r
+          payload: '/inform{{"phpv_employment_type":"Beamter"}}'
+        - title: Student:in
+          payload: '/inform{{"phpv_employment_type":"Student"}}'
+        - title: Rentner:in
+          payload: '/inform{{"phpv_employment_type":"Rentner"}}'
+        - title: Angestellte:r
+          payload: '/inform{{"phpv_employment_type":"Angestellter"}}'
+        - title: Arbeitslos
+          payload: '/inform{{"phpv_employment_type":"Arbeitslos"}}'
+
+  utter_ask_phpv_had_insurance_claims:
+    - text: "Hast du innerhalb der letzten 5 Jahre Schäden bei einer privaten Haftpflichtversicherung gemeldet?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_ask_phpv_with_contribution:
+    - text: "Möchtest du eine Selbstbeteiligung von 250€ haben?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_submit_phpv_form:
+    - text: "Danke, damit habe ich alle nötigen Informationen für die Berechnung deines Tarifs.
+    Versicherungsnehmer: {phpv_beneficiary}, berufliche Situation: {phpv_employment_type}, Schäden in den letzten 5 Jahren: {phpv_had_insurance_claims}, Selbstbeteiligung von 250€: {phpv_with_contribution}.
+    Dir werden nun die passenden Tarife angezeigt."
+
+  #____________________________kfz_form____________________________
+
+  #  utter_ask_kfz_hsn_tsn:
+  #    - text: "Wie lautet deine HSN-TSN Nummer?"
+
+  utter_ask_kfz_hsn:
+    - text: "Wie lautet deine HSN Nummer?"
+
+  utter_ask_kfz_tsn:
+    - text: "Wie lautet deine TSN Nummer?"
+
+
+  utter_ask_kfz_is_registered:
+    - text: "Hat das Fahrzeug bereits eine Erstzulassung?"
+      buttons:
+        - title: ja
+          payload: '/affirm'
+        - title: nein
+          payload: '/deny'
+
+  utter_ask_kfz_planned_registration_date:
+    - text: "Zu welchem Datum wird dein Fahrzeug voraussichtlich seine Erstzulassung erhalten?"
+
+
+#  utter_kfz_insurance_start_date:
+#    - text: "Zu welchem Datum möchtest du die Versicherung wechseln?"
+#
+#  utter_kfz_residence:
+#    - text: "Als nächstes benötige ich deine Postleitzahl und deinen Wohnort."
+#
+#  utter_kfz_date_of_birth:
+#    - text: "Wann wurdest du geboren?"
+#
+#  utter_kfz_employment_type:
+#    - text: "Wie ist deine aktuelle berufliche Situation?"
+#      buttons:
+#        - title: ja
+#          payload: /affirm
+#        - title: nein
+#          payload: /deny
+#
+#  utter_kfz_km_per_year:
+#    - text: "Wieviele Kilometer fährst du durchschnittlich pro Jahr?"
+#      buttons:
+#        - title: ja
+#          payload: /affirm
+#        - title: nein
+#          payload: /deny
+#
+#  utter_kfz_parking:
+#    - text: "Wo parkst du das Fahrzeug?"
+#
+#  utter_kfz_usage:
+#    - text: "Nutzt du dein Fahrzeug hauptsächlich privat oder geschäftlich?"
+#
+#  utter_kfz_drivers:
+#    - text: "Ist das Fahrzeug bereits auf deinen Namen zugelassen?"
+#      buttons:
+#        - title: ja
+#          payload: /affirm
+#        - title: nein
+#          payload: /deny

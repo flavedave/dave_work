@@ -1,0 +1,72 @@
+version: "3.1"
+stories:
+
+#____________________________happy paths____________________________
+
+- story: cancel phpv 1
+  steps:
+  - user: |-
+      /start_conversation
+    intent: start_conversation
+  - action: utter_introduce
+  - action: utter_ask_insurance_type
+  - user: |
+      [phpv]{"entity": "insurance_type", "value": "Private Haftpflichtversicherung"}
+    intent: decide_for_insurance_type
+  - action: action_validate_slot_mappings
+  - action: utter_offer_help_with_insurance_type
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_begin_tariff_conversation
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      [mich selbst]{"entity": "phpv_beneficiary", "value":"Single"}
+    intent: inform
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      [Studentin]{"entity": "phpv_employment_type", "value":"Student"}
+    intent: inform
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      Habe nun doch kein Interesse.
+    intent: cancel
+  - action: action_deactivate_loop
+  - active_loop: null
+  - action: utter_cancel_insurance_form
+  - action: utter_ask_insurance_type
+  - user: |
+      [phpv]{"entity": "insurance_type", "value": "Private Haftpflichtversicherung"}
+    intent: decide_for_insurance_type
+  - action: action_validate_slot_mappings
+  - action: utter_offer_help_with_insurance_type
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_begin_tariff_conversation
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      [ich]{"entity": "phpv_beneficiary", "value":"Single"}
+    intent: inform
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      [Student]{"entity": "phpv_employment_type", "value":"Student"}
+    intent: inform
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      Nein
+    intent: deny
+  - action: phpv_form
+  - active_loop: phpv_form
+  - user: |
+      ja
+    intent: affirm
+  - action: phpv_form
+  - active_loop: null
+  - action: utter_submit_phpv_form

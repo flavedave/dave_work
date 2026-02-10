@@ -1,0 +1,178 @@
+version: "3.1"
+
+stories:
+
+- story: ask again if insurance_type is unknown
+  steps:
+  - intent: decide_for_insurance_type
+    entities:
+      - insurance_type: Glasversicherung
+  - slot_was_set:
+      - insurance_type: Glasversicherung
+  - action: action_validate_slot_mappings
+  - slot_was_set:
+      - insurance_type: null
+  - action: utter_default_insurance_type
+  - action: utter_ask_insurance_type
+
+- story: user denies help with insurance type
+  steps:
+  - action: utter_offer_help_with_insurance_type
+  - intent: deny
+  - action: utter_offer_help
+
+- story: interactive hrv form story
+  steps:
+  - intent: decide_for_insurance_type
+    entities:
+      - insurance_type: Hausratversicherung
+  - slot_was_set:
+      - insurance_type: Hausratversicherung
+  - action: action_validate_slot_mappings
+  - slot_was_set:
+      - insurance_type: Hausratversicherung
+  - action: utter_offer_help_with_insurance_type
+  - intent: affirm
+  - action: utter_begin_tariff_conversation
+  - action: hrv_form
+  - active_loop: hrv_form
+  - slot_was_set:
+    - requested_slot: hrv_street
+  - slot_was_set:
+    - hrv_street: Hauptstraße 5
+  - slot_was_set:
+      - requested_slot: hrv_public_service
+  - slot_was_set:
+      - hrv_public_service: false
+  - slot_was_set:
+      - requested_slot: hrv_living_area
+  - slot_was_set:
+      - hrv_living_area: 90 Quadratmeter
+  - slot_was_set:
+      - requested_slot: hrv_damage_free
+  - slot_was_set:
+      - hrv_damage_free: false
+  - slot_was_set:
+      - requested_slot: hrv_insurance_start_date
+  - slot_was_set:
+      - hrv_insurance_start_date: 20.04.2025
+  - slot_was_set:
+      - requested_slot: hrv_birth_date
+  - slot_was_set:
+      - hrv_birth_date: 31.10.1994
+  - slot_was_set:
+      - requested_slot: hrv_glass_surface
+  - slot_was_set:
+      - hrv_glass_surface: false
+  - slot_was_set:
+      - requested_slot: hrv_coverage
+  - slot_was_set:
+      - hrv_coverage: Wohnung
+  - slot_was_set:
+      - requested_slot: hrv_bicycle_insurance
+  - slot_was_set:
+      - hrv_bicycle_insurance: false
+  - slot_was_set:
+      - requested_slot: hrv_emergency_assistance
+  - slot_was_set:
+      - hrv_emergency_assistance: false
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_hrv_form
+
+- story: interactive phpv form story
+  steps:
+  - intent: decide_for_insurance_type
+    entities:
+      - insurance_type: Private Haftpflichtversicherung
+  - slot_was_set:
+      - insurance_type: Private Haftpflichtversicherung
+  - action: action_validate_slot_mappings
+  - slot_was_set:
+      - insurance_type: Private Haftpflichtversicherung
+  - action: utter_offer_help_with_insurance_type
+  - intent: affirm
+  - action: utter_begin_tariff_conversation
+  - action: phpv_form
+  - active_loop: phpv_form
+  - slot_was_set:
+    - requested_slot: phpv_beneficiary
+  - slot_was_set:
+    - phpv_beneficiary: ich
+  - slot_was_set:
+      - requested_slot: phpv_employment_type
+  - slot_was_set:
+      - phpv_employment_type: Angestellter
+  - slot_was_set:
+      - requested_slot: phpv_had_insurance_claims
+  - slot_was_set:
+      - phpv_had_insurance_claims: false
+  - slot_was_set:
+      - requested_slot: phpv_with_contribution
+  - slot_was_set:
+      - phpv_with_contribution: false
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_phpv_form
+
+- story: interactive kfz form story
+  steps:
+  - intent: decide_for_insurance_type
+    entities:
+      - insurance_type: KFZ Versicherung
+  - slot_was_set:
+      - insurance_type: KFZ Versicherung
+  - action: action_validate_slot_mappings
+  - slot_was_set:
+      - insurance_type: KFZ Versicherung
+  - action: utter_offer_help_with_insurance_type
+  - intent: affirm
+  - action: utter_begin_tariff_conversation
+  - action: kfz_form
+  - active_loop: kfz_form
+  - slot_was_set:
+      - requested_slot: kfz_is_registered
+  - slot_was_set:
+      - kfz_is_registered: true
+  - slot_was_set:
+    - requested_slot: kfz_planned_regitration_date
+  - slot_was_set:
+    - kfz_planned_registration_date: 01.01.2025
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_insurance_form
+
+- story: Change slots during phpv_form execution
+  steps:
+    - active_loop: phpv_form
+    - intent: change_slot
+    - action: utter_change_slot
+    - intent: choose_slot_to_change
+    - action: action_reset_slot_to_change
+    - action: phpv_form
+
+- story: Change slots during phpv_form execution - slot given
+  steps:
+    - active_loop: phpv_form
+    - intent: choose_slot_to_change
+    - action: action_reset_slot_to_change
+    - action: phpv_form
+
+- story: Change slots during hrv_form execution
+  steps:
+    - active_loop: hrv_form
+    - intent: change_slot
+    - action: utter_change_slot
+    - intent: choose_slot_to_change
+    - action: action_reset_slot_to_change
+    - action: hrv_form
+
+- story: Change slots during hrv_form execution - slot given
+  steps:
+    - active_loop: hrv_form
+    - intent: choose_slot_to_change
+    - action: action_reset_slot_to_change
+    - action: hrv_form
