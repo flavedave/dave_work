@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chat</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/chat.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="d-flex align-items-center justify-content-between p-3">
+            <a href="/thymeleaf/conversation"><span class="fw-bold">Konversationen</span></a>
+            <form th:action="@{/thymeleaf/conversation}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-sm btn-success" title="Neue Konversation">
+                    +
+                </button>
+            </form>
+        </div>
+        <form id="conversationForm" th:action="@{/conversation/select}">
+            <input type="hidden" id="selectedConversationId" name="conversationId"/>
+            <div class="list-group list-group-flush">
+                <a th:each="conv : ${conversation}"
+                   th:text="${conv.title}"
+                   th:href="${'/thymeleaf/conversation/'+conv.id}"
+                   th:classappend="${selectedConversation != null and conv.id == selectedConversation.id} ? 'active' : ''"
+                   class="list-group-item list-group-item-action"
+                   style="cursor:pointer; text-decoration: none;">
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Chatbereich -->
+    <div class="chat-container">
+        <div th:if="${selectedConversation == null}" class="empty-state">
+            <div>
+                <h4 class="mb-3">Willkommen beim AI Chat</h4>
+                <p class="text-muted">Bitte wähle eine Konversation aus oder erstelle eine neue.</p>
+            </div>
+        </div>
+
+        <div th:if="${selectedConversation != null}">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar-custom">
+                    <div class="progress-fill"
+                         th:style="'width: ' + ${selectedConversation.currentStepId == 'WELCOME' ? '16.67' : 
+                                                  selectedConversation.currentStepId == 'GATHER_REQUIREMENTS' ? '33.33' : 
+                                                  selectedConversation.currentStepId == 'CLARIFY_SCOPE' ? '50' : 
+                                                  selectedConversation.currentStepId == 'PROVIDE_SOLUTION' ? '66.67' : 
+                                                  selectedConversation.currentStepId == 'CONFIRM_SOLUTION' ? '83.33' : 
+                                                  selectedConversation.currentStepId == 'COMPLETED' ? '100' : '16.67'} + '%'"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="progress-step"
+                         th:classappend="${selectedConversation.currentStepId == 'WELCOME' ? 'active' : 
+                                          (selectedConversation.currentStepId == 'GATHER_REQUIREMENTS' or 
+                                           selectedConversation.currentStepId == 'CLARIFY_SCOPE' or 
+                                           selectedConversation.currentStepId == 'PROVIDE_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'CONFIRM_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'COMPLETED') ? 'completed' : ''}">
+                        Willkommen
+                    </div>
+                    <div class="progress-step"
+                         th:classappend="${selectedConversation.currentStepId == 'GATHER_REQUIREMENTS' ? 'active' : 
+                                          (selectedConversation.currentStepId == 'CLARIFY_SCOPE' or 
+                                           selectedConversation.currentStepId == 'PROVIDE_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'CONFIRM_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'COMPLETED') ? 'completed' : ''}">
+                        Anforderungen
+                    </div>
+                    <div class="progress-step"
+                         th:classappend="${selectedConversation.currentStepId == 'CLARIFY_SCOPE' ? 'active' : 
+                                          (selectedConversation.currentStepId == 'PROVIDE_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'CONFIRM_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'COMPLETED') ? 'completed' : ''}">Umfang
+                    </div>
+                    <div class="progress-step"
+                         th:classappend="${selectedConversation.currentStepId == 'PROVIDE_SOLUTION' ? 'active' : 
+                                          (selectedConversation.currentStepId == 'CONFIRM_SOLUTION' or 
+                                           selectedConversation.currentStepId == 'COMPLETED') ? 'completed' : ''}">Lösung
+                    </div>
+                    <div class="progress-step"
+                         th:classappend="${selectedConversation.currentStepId == 'CONFIRM_SOLUTION' ? 'active' : 
+                                          selectedConversation.currentStepId == 'COMPLETED' ? 'completed' : ''}">
+                        Bestätigung
+                    </div>
+                    <div class="progress-step"
+                         th:classappend="${selectedConversation.currentStepId == 'COMPLETED' ? 'active completed' : ''}">
+                        Fertig
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="messages-area" id="chatWindow">
+                <div th:each="msg : ${selectedConversation.messages}">
+                    <div th:class="'messages ' + (${msg.role} == 'USER' ? 'user' : 'ai')">
+                        <div class="messages-avatar" th:text="${msg.role} == 'USER' ? 'U' : 'AI'"></div>
+                        <div class="messages-content">
+                            <div class="messages-bubble" th:utext="${msg.content}">Nachrichtentext</div>
+                            <div class="messages-meta"
+                                 th:text="${#temporals.format(msg.timestamp, 'dd.MM.yyyy HH:mm:ss')}">Zeit
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="scroll-anchor" style="height: 1px;"></div>
+            </div>
+
+            <script>
+                const anchor = document.getElementById('scroll-anchor');
+                if (anchor) {
+                    anchor.scrollIntoView({ behavior: 'auto', block: 'end' });
+                }
+            </script>
+
+            <!-- Task Data Selection Buttons -->
+            <div th:if="${selectedConversation.taskData != null and !selectedConversation.taskData.empty}"
+                 class="task-buttons-area">
+                <div class="d-flex flex-wrap gap-2 px-3">
+                    <form th:action="@{/thymeleaf/chat}" method="post">
+                        <input type="hidden" name="conversationId" th:value="${selectedConversation.id}"/>
+                        <button th:each="taskItem : ${selectedConversation.taskData}"
+                                type="submit"
+                                class="btn btn-outline-primary btn-sm task-btn me-2 mb-2 mr-3"
+                                th:text="${taskItem}"
+                                th:value="${taskItem}"
+                                name="messageText"
+                                >
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <form th:action="@{/thymeleaf/chat}" method="post">
+                    <input type="hidden" name="conversationId" th:value="${selectedConversation.id}"/>
+                    <div class="input-group">
+                        <input type="text" id="messageId" name="messageText" class="form-control"
+                               placeholder="Nachricht eingeben..."
+                               required>
+                        <button class="btn btn-primary" type="submit">Senden</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
