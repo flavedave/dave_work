@@ -1,0 +1,29 @@
+image: maven:3.9.12-eclipse-temurin-21
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+
+stages:
+  - lint
+  - build
+  - test
+
+spotless-check:
+  stage: lint
+  script:
+    - mvn spotless:check
+
+compile:
+  stage: build
+  script:
+    - mvn compile
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 hour
+
+unit-test:
+  stage: test
+  script:
+    - mvn test -Dtest="!ApplicationTest" -Dsurefire.failIfNoSpecifiedTests=false

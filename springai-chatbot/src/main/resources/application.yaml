@@ -1,0 +1,52 @@
+server:
+  port: 8080
+spring:
+  config:
+    import: "classpath:config/dialogue.yaml"
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/example_db
+    username: pi
+    password: password
+  ai:
+    azure:
+      openai:
+        api-key: ${OPENAI_API_KEY}
+        endpoint: ${OPENAI_API_ENDPOINT}
+        chat:
+          options:
+            model: gpt-4.1
+        embedding:
+          options:
+            model: text-embedding-3-large
+    mcp:
+      client:
+        enabled: false
+        name: digitalerberater-bot-mcp-client
+        initialized: true
+        request-timeout: 10s
+        type: SYNC
+        toolcallback.enabled: true
+        streamable-http:
+          connections:
+            jj:
+              url: http://localhost:8082
+              endpoint: /mcp
+              token-relay-enabled: true
+              jwt: ${JJ-USER-JWT} # ToDo: remove as soon as frontend is able to pass JWTs
+              api-key: ${JJ-MCP-SERVER-API-KEY}
+management:
+  endpoint:
+    refresh:
+      access: UNRESTRICTED
+  endpoints:
+    web:
+      exposure:
+        include: refresh

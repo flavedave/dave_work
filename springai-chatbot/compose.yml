@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  digitalerberater-database:
+    image: pgvector/pgvector:pg17
+    container_name: digitalerberater-database
+    environment:
+      POSTGRES_USER: pi
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: example_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+      - pgdata:/var/lib/postgresql/data
+
+  jj-mcp-connector:
+    image: gitlab-registry.adesso-group.com/aa707aad/jj-mcp-connector:mcp-aligned
+    container_name: jj-mcp-connector
+    networks:
+      - jj-network
+    ports:
+      - "8082:8082"
+    environment:
+      JJ_BACKEND_URL: http://jj-backend:8084
+      SPRING_PROFILES_ACTIVE: local
+
+  jj-backend:
+    image: gitlab-registry.adesso-group.com/aa707aad/jj-backend:mcp-aligned
+    container_name: jj-backend
+    depends_on:
+      jj-database:
+        condition: service_healthy
+    networks:
+      - jj-network
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://jj-database:3306/james
+      SPRING_DATASOURCE_USERNAME: jj
+      SPRING_DATASOURCE_PASSWORD: adessoSecret!
+      SPRING_PROFILES_ACTIVE: local
+
+  jj-database:
+    image: mariadb:lts-noble
+    container_name: jj-database
+    networks:
+      - jj-network
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: james
+      MARIADB_USER: jj
+      MARIADB_PASSWORD: adessoSecret!
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-u", "root", "-proot" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
+
+networks:
+  jj-network:
+    driver: bridge
+
+volumes:
+  pgdata:

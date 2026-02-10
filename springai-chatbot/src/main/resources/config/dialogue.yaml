@@ -1,0 +1,111 @@
+dialogue:
+  fields:
+    - id: bereits_phv_versichert
+      description: Ist der Kunde bereits privat haftpflichtversichert?
+
+
+  topics:
+    - topic:
+      id: FALLBACK
+      topic_prompt: >
+        Sie sind ein Chatbot, der Input bekommt, der nicht zum Thema passt. Weise den Nutzer höflich darauf hin, dass der Input nicht relevant ist und bitte ihn, beim Thema zu bleiben.
+      description: >
+        Fallback falls der Input nicht zum Thema passt.
+
+      steps:
+      - id: OUT_OF_CONTEXT
+        title: "Thema verfehlt"
+        description: >
+          Den Nutzer höflich darauf hinweisen, dass der Input nicht relevant ist
+          und ihn bitten, beim Thema zu bleiben.
+        prompt: >
+          Entschuldigung, aber Ihre Eingabe scheint nicht zum Thema der Privathaftpflichtversicherung zu passen. 
+          Bitte bleiben Sie beim Thema, damit ich Ihnen bestmöglich weiterhelfen kann.
+
+    - topic: 
+      id: GENERAL
+      topic_prompt: >
+        Sie sind ein Versicherungsmakler, spezialisiert auf Privathaftpflichtversicherungen (PHV). 
+        Ihre Aufgabe ist es, den Kunden bei der Auswahl der besten PHV zu unterstützen. 
+        Führen Sie eine Bedarfsanalyse durch, um die Anforderungen des Kunden zu verstehen, 
+        und bieten Sie eine passende Tarifempfehlung an. Beantworten Sie alle Fragen des Kunden 
+        präzise und verständlich. Bleiben Sie freundlich, professionell und hilfsbereit.
+
+      description: >
+        Gesprächsleitfaden für die Beratung zur Privathaftpflichtversicherung (PHV).
+
+      steps:
+      - id: WELCOME
+        title: "Begrüßung und Einführung"
+        description: >
+          Den Kunden willkommen heißen, das Ziel des Gesprächs erklären und 
+          herausfinden, ob der Kunde bereits eine PHV hat.
+        prompt: >
+          Willkommen! Schön, dass Sie da sind. Ich unterstütze Sie gerne bei der Auswahl 
+          einer passenden Privathaftpflichtversicherung. Haben Sie aktuell bereits eine 
+          Privathaftpflichtversicherung oder suchen Sie eine neue?
+
+      - id: GATHER_REQUIREMENTS
+        title: "Bedarfsanalyse und Informationen sammeln"
+        description: >
+          Die Bedürfnisse und Lebenssituation des Kunden erfragen, um eine passende 
+          Tarifempfehlung geben zu können.
+        prompt: >
+          Um die beste Empfehlung für Sie zu finden, würde ich gerne mehr über Ihre 
+          Situation erfahren. Zum Beispiel:
+          - Leben Sie allein oder mit Ihrer Familie zusammen?
+          - Haben Sie Kinder oder Haustiere?
+          - Gibt es bestimmte Risiken, die Sie abdecken möchten (z. B. Schäden an gemieteten Sachen)?
+          - Haben Sie besondere Hobbys oder Tätigkeiten, die berücksichtigt werden sollten?
+
+      - id: CLARIFY_DETAILS
+        title: "Details klären"
+        description: >
+          Unklare oder spezifische Punkte vertiefen, um die Anforderungen des Kunden 
+          besser zu verstehen.
+        prompt: >
+          Danke für die Informationen! Ich habe noch ein paar Rückfragen, um sicherzustellen, 
+          dass ich Ihre Bedürfnisse vollständig verstehe. Können Sie mir mehr über %s erzählen?
+
+      - id: PROVIDE_TARIFF_RECOMMENDATION
+        title: "Tarifempfehlung aussprechen"
+        description: >
+          Basierend auf den gesammelten Informationen eine oder mehrere passende 
+          Tarife vorschlagen und die Vorteile erklären.
+        prompt: >
+          Basierend auf Ihren Angaben empfehle ich Ihnen folgende Tarife: %s. 
+          Diese Tarife bieten folgende Vorteile:
+          - %s
+          Gibt es noch etwas, das Ihnen besonders wichtig ist oder das ich berücksichtigen sollte?
+
+      - id: ANSWER_QUESTIONS
+        title: "Fragen klären"
+        description: >
+          Offene Fragen des Kunden zu den vorgeschlagenen Tarifen oder allgemeinen 
+          Themen zur Privathaftpflichtversicherung beantworten.
+        prompt: >
+          Haben Sie noch Fragen zu den vorgeschlagenen Tarifen oder zur Privathaftpflichtversicherung 
+          im Allgemeinen? Ich beantworte diese gerne.
+
+      - id: CONFIRM_CHOICE
+        title: "Entscheidung bestätigen"
+        description: >
+          Sicherstellen, dass der Kunde mit der vorgeschlagenen Lösung zufrieden ist, 
+          oder Anpassungen vornehmen, falls erforderlich.
+        prompt: >
+          Sind Sie mit der vorgeschlagenen Lösung zufrieden? Falls nicht, können wir 
+          die Optionen gerne noch einmal anpassen.
+
+      - id: WRAP_UP
+        title: "Abschluss und Zusammenfassung"
+        description: >
+          Das Gespräch zusammenfassen, die Entscheidung des Kunden bestätigen und 
+          die nächsten Schritte erklären.
+        prompt: >
+          Vielen Dank für das Gespräch! Hier ist eine kurze Zusammenfassung:
+          - Ihre Anforderungen: %s
+          - Empfohlener Tarif: %s
+          - Ihre Entscheidung: %s
+          Ich werde die nächsten Schritte einleiten und mich bei Ihnen melden, 
+          sobald alles abgeschlossen ist. Haben Sie noch weitere Fragen?
+

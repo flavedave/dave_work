@@ -1,0 +1,54 @@
+Beratung zu einer Versicherung  : liste aller wichtigen Versicherungen nach Priorität auf.
+
+Hier ist eine strukturierte Übersicht aller wichtigen Versicherungen nach Priorität:
+Pflichtversicherungen
+
+Krankenversicherung - Gesetzlich vorgeschrieben
+Kfz-Haftpflichtversicherung - Bei Fahrzeugbesitz obligatorisch
+Berufshaftpflichtversicherung - Für bestimmte Berufe (Ärzte, Anwälte, etc.)
+
+Existenziell wichtig (unbedingt empfohlen)
+
+Private Haftpflichtversicherung - Schutz vor Schadensersatzansprüchen
+Berufsunfähigkeitsversicherung - Absicherung des Einkommens
+Hausratversicherung - Schutz des persönlichen Eigentums
+Wohngebäudeversicherung - Für Immobilieneigentümer
+
+Sehr empfehlenswert
+
+Risikolebensversicherung - Hinterbliebenenabsicherung bei Unterhaltspflichten
+Private Unfallversicherung - Ergänzung zur gesetzlichen Unfallversicherung
+Rechtsschutzversicherung - Schutz vor Rechtsstreitkosten
+
+Sinnvoll je nach Lebenssituation
+
+Reiserücktrittsversicherung - Bei teuren Reisen
+Auslandsreisekrankenversicherung - Für Reisen außerhalb der EU
+Pflegezusatzversicherung - Zur Schließung der Pflegelücke
+Zahnzusatzversicherung - Für bessere Zahnbehandlung
+Kfz-Vollkasko/Teilkasko - Je nach Fahrzeugwert
+Tierhalterhaftpflicht - Für Hundebesitzer (teilweise Pflicht)
+
+Optional/Luxus
+
+Kapitallebensversicherung - Altersvorsorge (oft ineffizient)
+Restschuldversicherung - Schutz bei Kreditausfall
+Handyversicherung - Bei sehr teuren Geräten
+Brillenversicherung - Für Vielträger
+Fahrradversicherung - Bei teuren E-Bikes
+Glasversicherung - Bei viel Glas im Haus
+
+Meist überflüssig
+
+Sterbegeldversicherung - Meist unwirtschaftlich
+Insassenunfallversicherung - Doppelt abgesichert
+Gepäckversicherung - Meist durch andere Versicherungen gedeckt
+Krankenhaustagegeldversicherung - Nur bei sehr gutem Einkommen
+Elektronikversicherung - Meist überteuert
+
+Spezielle Berufsgruppen
+
+Betriebshaftpflichtversicherung - Für Selbstständige
+Firmenrechtsschutz - Für Unternehmer
+D&O-Versicherung - Für Geschäftsführer
+Cyber-Versicherung - Für IT-affine Unternehmen
